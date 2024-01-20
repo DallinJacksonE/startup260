@@ -29,4 +29,8 @@ This website will be primarily a communication tool for my sister. It will inclu
 ### Login Page
 ![Concept Drawing of the login page](https://github.com/DallinJacksonE/startup260/blob/main/docs/pics/login.jpg)
 
+# Notes
+## Setting up HTTPS with caddy
+After buying the domain name kayliescreations.biz, I updated the caddy file to reroute from port 80 to the service page.
+
 
