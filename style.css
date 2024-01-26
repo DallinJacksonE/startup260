@@ -29,6 +29,8 @@ body {
     position: sticky;
     top: 0;
     border: blue dashed 1px;
+    border-radius: 10px;
+    background-color: aqua;
 }
 
 .nav ul {
