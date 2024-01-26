@@ -5,7 +5,7 @@ My sister has built up a small business over the last few years, and I'd like to
 There is a lot to set up and learn, but I am hopeful that I can make her something that she can use to generate more income and online presence.
 
 ## Key Features
-This website will be primarily a communication tool for my sister. It will include the ability for customers to log, see a splash screen and feed with current information that Kaylie will be able to edit and change. There will be a gallery of available products for purchase. A login will be required to enter the chat, where one can place orders and give specifications about how they want their products. In the chat, users will talk with Kaylie, and once an agreement is made, they will pay Kaylie's venmo account. The website will then made a ticket that Kaylie will be able to see on an orders page only available to users with the admin status. She can mark them complete, then send the user a message that their product is on the way. 
+This website will be primarily a communication tool for my sister. It will include the ability for customers to login, and see a splash screen with current information that Kaylie will be able to uodate. There will be a gallery of available products for purchase. A login will be required to enter the chat, where one can place orders and give specifications about how they want their products. In the chat, users will talk with Kaylie, and once an agreement is made, they will pay Kaylie's venmo account. The website will then make a ticket that Kaylie will be able to see on an orders page only available to users with the admin status. She can mark them complete, then send the user a message that their product is on the way. 
 
 ## Technologies
 1. **Authentication** will be used by customers that wish to purchase an item. It will be used so that users can have private chats with Kaylie, exchange a shipping address, and pay. 
@@ -28,5 +28,9 @@ This website will be primarily a communication tool for my sister. It will inclu
 
 ### Login Page
 ![Concept Drawing of the login page](https://github.com/DallinJacksonE/startup260/blob/main/docs/pics/login.jpg)
+
+# Notes
+## Setting up HTTPS with caddy
+After buying the domain name kayliescreations.biz, I updated the caddy file to reroute from port 80 to the service page.
 
 
