@@ -1,0 +1,36 @@
+/* Importing things */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: orange dashed 1px;
+}
+
+/* Global styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    width: 100%;
+    position: sticky;
+    top: 0;
+}
+
+.nav li {
+    float: left;
+    display: inline;
+}
