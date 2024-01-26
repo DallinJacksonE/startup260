@@ -28,9 +28,29 @@ body {
     width: 100%;
     position: sticky;
     top: 0;
+    border: blue dashed 1px;
+}
+
+.nav ul {
+    width: 100%;
+    border: red dashed 1px;
 }
 
 .nav li {
     float: left;
     display: inline;
+    width: 25%;
+}
+
+.nav li a {
+    display: block;
+    color: #333;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.nav li a:hover {
+    background-color: #ddd;
+    color: black;
 }
