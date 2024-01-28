@@ -66,12 +66,16 @@ body {
     width: 50%;
     border: green dashed 1px;
     float: left;
+    height: fit-content;
+    display: center;
 }
 
 .right-column {
     width: 50%;
     border: green dashed 1px;
     float: right;
+    
+    
 }
 
 .body {
@@ -81,8 +85,8 @@ body {
     
 }
 
-#frontpic {
-    width: 30%;
+#mainpagepic {
+    width: 50%;
     float: right;
     border: rgb(228, 107, 200) solid 1px;
 }
@@ -91,4 +95,9 @@ body {
     width: 70%;
     float: left;
     
+}
+
+#instagram-gallery {
+    width: 100%;
+    border: rgb(234, 255, 0) dotted 1px;
 }
