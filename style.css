@@ -64,7 +64,7 @@ body {
 
 .left-column {
     width: 50%;
-    border: green dashed 1px;
+    border: red dashed 1px;
     float: left;
     height: fit-content;
     display: center;
@@ -99,5 +99,5 @@ body {
 
 #instagram-gallery {
     width: 100%;
-    border: rgb(234, 255, 0) dotted 1px;
+    float: left;
 }
