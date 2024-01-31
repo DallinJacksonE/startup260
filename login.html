@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tickets</title>
+    <title>Login</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -26,14 +26,20 @@
         </nav>
     </div>
     <main>
-       <div class="columns-container">
+       <div class="login-container">
             <div class="left-column">
-                <h2>Order Tickets/Chat With Kaylie</h2>
+                <h2>Login</h2>
+                <input type="text" id="username" placeholder="Username">
+                <input type="password" id="password" placeholder="Password">
+                <button id="login">Login</button>
             </div>
-            <div class="right-column" id="ticketform">
-                <h2>Fill Out Your Ticket</h2>
+            <div class="right-column" id="loginform">
+                <h2>Make Account</h2>
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button id="create">Create Account</button>
             </div>
-       </div>
     
     </main>
 
