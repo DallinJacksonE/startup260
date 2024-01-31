@@ -1,20 +1,28 @@
 /* Importing things */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Goblin+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:wght@400;700&display=swap');
 /* Reset default styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    border: orange dashed 1px;
+    font-family: 'Newsreader', serif;
     
 }
 
 /* Global styles */
 body {
-    font-family: 'Roboto', sans-serif;
+    
     font-size: 16px;
     line-height: 1.5;
     color: #333;
+    font-family: 'Newsreader', serif;
+}
+
+h1, h2, h3 {
+    font-family: 'Goblin One', cursive;
 }
 
 .nav {
@@ -61,11 +69,17 @@ body {
     color: white;
 }
 
+.columns-container {
+    display: flex;
+    padding: 20px;
+    width: 100%;
+    height: fit-content;
+}
+
 .left-column {
     width: 50%;
-    
     float: left;
-    height: fit-content;
+    height: 500px;
     display: center;
 }
 
@@ -95,3 +109,9 @@ main {
     width: 100%;
     float: left;
 }
+
+footer {
+    bottom: 0;
+    width: 100%;
+
+  }
