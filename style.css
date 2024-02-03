@@ -19,6 +19,7 @@ body {
     line-height: 1.5;
     color: #333;
     font-family: 'Newsreader', serif;
+    margin: 1%;
 }
 
 h1, h2, h3 {
@@ -75,18 +76,32 @@ h1, h2, h3 {
     padding: 20px;
     width: 100%;
     height: fit-content;
+    /* border: red dashed 2px; */
 }
 
 .left-column {
+    padding: 1%;
     width: 50%;
     float: left;
     height: 500px;
     display: center;
+    /* border: orange solid 1px; */
 }
 
 .right-column {
+    padding: 1%;
     width: 50%;
     float: right;
+    /* border: purple solid 1px; */
+}
+
+.chat {
+    border: solid 1px black;
+    height: 300px;
+}
+
+.ticketform {
+    padding: 3%;
 }
 
 main {

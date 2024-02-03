@@ -1,3 +1,9 @@
-Class Notes for 260
-Git: learned commands and importance for frequent pushing to the main directory.
-Questions: Ask good questions, formulate issues into actionable statements, and start by asking yourself that same question.
+# Class Notes for 260
+
+## Git and GitHub
+
+### Commands
+
+- ```git add .``` adds all the files in your project directory to the stage to be committed.
+
+
