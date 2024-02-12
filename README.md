@@ -25,19 +25,19 @@ This website will be primarily a communication tool for my sister. It will inclu
 
 ### Main Page
 
-![Screenshot of a mainpage](https://github.com/DallinJacksonE/startup260/blob/main/docs/pics/homepage.jpg)
+![Screenshot of a mainpage](https://github.com/DallinJacksonE/startup260/blob/main/docs/picsForConcept/homepage.jpg)
 
 ### Gallery
 
-![Concept Drawing of the gallery](https://github.com/DallinJacksonE/startup260/blob/main/docs/pics/gallery.jpg)
+![Concept Drawing of the gallery](https://github.com/DallinJacksonE/startup260/blob/main/docs/picsForConcept/gallery.jpg)
 
 ### Inquiry Page
 
-![Concept Drawing of the inquiry page, where conversations and orders are had](https://github.com/DallinJacksonE/startup260/blob/main/docs/pics/orderchat.jpg)
+![Concept Drawing of the inquiry page, where conversations and orders are had](https://github.com/DallinJacksonE/startup260/blob/main/docs/picsForConcept/orderchat.jpg)
 
 ### Login Page
 
-![Concept Drawing of the login page](https://github.com/DallinJacksonE/startup260/blob/main/docs/pics/login.jpg)
+![Concept Drawing of the login page](https://github.com/DallinJacksonE/startup260/blob/main/docs/picsForConcept/login.jpg)
 
 ## Notes
 
