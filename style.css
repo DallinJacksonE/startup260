@@ -7,7 +7,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    border: orange dashed 1px;
+    /* border: orange dashed 1px; */
     font-family: 'Newsreader', serif;
     
 }
@@ -70,7 +70,7 @@ h1, h2, h3 {
 }
 
 .left-column {
-    padding: 1%;
+    
     width: 50%;
     float: left;
     height: fit-content;
@@ -79,7 +79,7 @@ h1, h2, h3 {
 }
 
 .right-column {
-    padding: 1%;
+    
     width: 50%;
     float: right;
     /* border: purple solid 1px; */
@@ -114,10 +114,9 @@ main {
 }
 
 #instagram-gallery {
-    width: 100%;
-    height: 500px;
-    float: left;
-    background-color: #cae9ff;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 footer {
