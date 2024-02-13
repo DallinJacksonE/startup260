@@ -117,7 +117,9 @@ main {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    
 }
+
 
 footer {
     flex: 0 40px;
