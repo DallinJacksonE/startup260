@@ -5,41 +5,193 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="https://getbootstrap.com/docs/5.1/assets/css/docs.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-
 <body>
-    <div class="header">
-        <div class="logo">
-            <h1>Kaylie's Creations</h1>
-        </div>
-        <nav class="nav">
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="shop.html">Shop</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="orderstatus.html" id="status">Availability</a></li>
-                <li><a href="ticketpage.html">Order Tickets</a></li>
-                <li><a href="login.html">Login</a></li>
+    <header>
+        <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light ">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#"
+                    style="font-family: 'Goblin One', cursive; color: #1b4965; font-size: 2em;">Kaylie's Creations</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="shop.html">Shop</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="ticketpage.html">Ticket Page</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="orderstatus.html">Status</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page">Login</a>
+                        </li>
 
-            </ul>
+                    </ul>
+                </div>
+            </div>
         </nav>
-    </div>
+    </header>
     <main>
        <div class="login-container">
-            <div class="left-column">
-                <h2>Login</h2>
-                <input type="text" id="username" placeholder="Username">
-                <input type="password" id="password" placeholder="Password">
-                <button id="login">Login</button>
-            </div>
+        <div class="left-column" id="loginform">
+            <main class="form-signin w-100 m-auto">
+
+                <form>
+                    <h1 class="h3 mb-3 fw-normal">Make an account</h1>
+
+                    <div class="form-floating">
+                      <input type="email" class="form-control" id="floatingInput" placeholder="you@email.com" required>
+                      <label for="floatingInput">Email address</label>
+                    </div>
+
+                    <div class="form-floating">
+                      
+                      <input type="password" class="form-control" id="floatingPassword" placeholder="Password" required>
+                      <label for="floatingPassword">Password</label>
+                      <div id="emailHelp" class="form-text">Must contatin 8 characters or digits.</div>
+                    </div>
+
+                    <div class="form-floating">
+                      
+                      <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" required>
+                      <label for="floatingInput">Address</label>
+                    </div>
+
+                    <div class="form-floating">
+                      
+                      <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" >
+                      <label for="floatingInput">Address 2 (Not Required)</label>
+                    </div>
+
+                    <div class="form-floating">
+                      
+                      <input type="text" class="form-control" id="inputCity" placeholder="City" required>
+                      <label for="floatingInput">City</label>
+                    </div>
+
+                    <div class="form-floating">
+                      <select id="inputState" class="form-select" required>
+                        <option selected disabled value="">-Choose-</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="AR">Arkansas</option>
+                        <option value="CA">California</option>
+                        <option value="CO">Colorado</option>
+                        <option value="CT">Connecticut</option>
+                        <option value="DE">Delaware</option>
+                        <option value="FL">Florida</option>
+                        <option value="GA">Georgia</option>
+                        <option value="HI">Hawaii</option>
+                        <option value="ID">Idaho</option>
+                        <option value="IL">Illinois</option>
+                        <option value="IN">Indiana</option>
+                        <option value="IA">Iowa</option>
+                        <option value="KS">Kansas</option>
+                        <option value="KY">Kentucky</option>
+                        <option value="LA">Louisiana</option>
+                        <option value="ME">Maine</option>
+                        <option value="MD">Maryland</option>
+                        <option value="MA">Massachusetts</option>
+                        <option value="MI">Michigan</option>
+                        <option value="MN">Minnesota</option>
+                        <option value="MS">Mississippi</option>
+                        <option value="MO">Missouri</option>
+                        <option value="MT">Montana</option>
+                        <option value="NE">Nebraska</option>
+                        <option value="NV">Nevada</option>
+                        <option value="NH">New Hampshire</option>
+                        <option value="NJ">New Jersey</option>
+                        <option value="NM">New Mexico</option>
+                        <option value="NY">New York</option>
+                        <option value="NC">North Carolina</option>
+                        <option value="ND">North Dakota</option>
+                        <option value="OH">Ohio</option>
+                        <option value="OK">Oklahoma</option>
+                        <option value="OR">Oregon</option>
+                        <option value="PA">Pennsylvania</option>
+                        <option value="RI">Rhode Island</option>
+                        <option value="SC">South Carolina</option>
+                        <option value="SD">South Dakota</option>
+                        <option value="TN">Tennessee</option>
+                        <option value="TX">Texas</option>
+                        <option value="UT">Utah</option>
+                        <option value="VT">Vermont</option>
+                        <option value="VA">Virginia</option>
+                        <option value="WA">Washington</option>
+                        <option value="WV">West Virginia</option>
+                        <option value="WI">Wisconsin</option>
+                        <option value="WY">Wyoming</option>
+                    </select>
+                    <label for="floatingInput">State</label>
+                    </div>
+
+                    <div class="form-floating">
+                      
+                      <input type="text" class="form-control" id="inputZip" placeholder="Zip" required>
+                      <label label for="floatingInput">Zip</label>
+                    </div>
+
+                    <div id="emailHelp" class="form-text">We'll never share your information with anyone else.</div>
+
+                    <div class="col-12">
+
+                      <div class="form-check text-start my-3">
+                        <input class="form-check-input" type="checkbox" id="gridCheck" required>
+                        <label class="form-check-label" for="gridCheck">
+                          I consent to Kaylie having my information to send me my orders and contact me if necassry.
+                        </label>
+                      </div>
+
+                    </div>
+
+                    <div class="col-12">
+                      <button type="submit" class="btn btn-primary w-100 py-2">Sign in</button>
+                    </div>
+                    <div style="height: 4em"></div>
+
+                  </form>
+            </main>
+
+        </div>
             <div class="right-column" id="loginform">
-                <h2>Make Account</h2>
-                <input type="email" id="email" placeholder="Email" required>
-                <input type="text" id="username" placeholder="Username" required>
-                <input type="password" id="password" placeholder="Password" required>
-                <button id="create">Create Account</button>
+                <main class="form-signin w-100 m-auto">
+                    <form>
+                      <h1 class="h3 mb-3 fw-normal">Sign in</h1>
+                      <div class="form-floating">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+                        <label for="floatingInput">Email address</label>
+                      </div>
+                      <div class="form-floating">
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" required>
+                        <label for="floatingPassword">Password</label>
+                      </div>
+                  
+                      <div class="form-check text-start my-3">
+                        <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                          Remember me
+                        </label>
+                      </div>
+                      <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+                      
+                    </form>
+                  </main>
             </div>
     
     </main>
@@ -53,4 +205,8 @@
         <a href="https://github.com/DallinJacksonE/startup260">GitHub</a>
     </div>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
 </html>
