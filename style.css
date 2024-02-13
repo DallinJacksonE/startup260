@@ -160,6 +160,87 @@ footer {
 
 }
 
+/* ---CHAT CSS--- */
+.chatbox{
+    background-color: #1b4965;
+    border-radius: 10px;
+    border: line #000000 10px;
+    padding: 1em;
+    margin: 1 em;
+}
+
+.messages {
+    max-height: 630px;
+    overflow-y: scroll;
+}
+
+.messageInput {
+    background-color: #ccc;
+    
+
+}
+
+.messageInput img {
+    float: left;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+    float: right;
+    margin-left: 20px;
+    margin-right:0;
+  }
+
+/* Chat containers */
+.chat-container {
+    border: 2px solid #dedede;
+    background-color: #cae9ff;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+  }
+  
+  /* Darker chat container */
+  .darker {
+    border-color: #ccc;
+    background-color: #5fa8d3;
+  }
+  
+  /* Clear floats */
+  .chat-container::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  
+  /* Style images */
+  .chat-container img {
+    float: left;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+  }
+  
+  /* Style the right image */
+  .chat-container img.right {
+    float: right;
+    margin-left: 20px;
+    margin-right:0;
+  }
+  
+  /* Style time text */
+  .chat-time-right {
+    float: right;
+    color: #aaa;
+  }
+  
+  /* Style time text */
+  .chat-time-left {
+    float: left;
+    color: #dbdbdb;
+  }
+
 @media (max-width: 768px) {
     .columns-container {
         flex-direction: column;
