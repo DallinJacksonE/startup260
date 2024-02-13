@@ -58,7 +58,7 @@ I used HTMl to create the following:
 
 CSS implemented the following:
 - [x] fonts, and text sizes for headers and words. My sister picken out Goblin One and Newsreader from Google.fonts, so I have an API call importing those fonts at the top of my css file
-- [ ] Bootsrap was imported as well, I am working on using their available CSS classes to increase the professionalism and responsiveness of my site.
+- [x] Bootsrap was imported as well, I am working on using their available CSS classes to increase the professionalism and responsiveness of my site.
 - [ ] Container placement and padding was set up
 - [x] Login will be made pretty
 - [x] Navbar functionality and responsiveness
