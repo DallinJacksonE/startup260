@@ -48,6 +48,7 @@ After buying the domain name kayliescreations.biz, I updated the caddy file to r
 ### ✅ HTML Deliverable
 
 I used HTMl to create the following:
+
 - [x] 6 html pages with different layouts based on the technologies that would be included.
 - [x] Various text paragraphs within the ```<main></main>``` html tag in the body of each page
 - [x] A login form for customer information and orders to be stored in the DB
@@ -57,6 +58,7 @@ I used HTMl to create the following:
 ### ❌ CSS deliverable (not complete)
 
 CSS implemented the following:
+
 - [x] fonts, and text sizes for headers and words. My sister picken out Goblin One and Newsreader from Google.fonts, so I have an API call importing those fonts at the top of my css file
 - [x] Bootsrap was imported as well, I am working on using their available CSS classes to increase the professionalism and responsiveness of my site.
 - [ ] Container placement and padding was set up
@@ -65,4 +67,3 @@ CSS implemented the following:
 - [ ] Image placement and gallery design
 
 ### ❌ Javascript deliverable (not complete)
-
