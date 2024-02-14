@@ -55,15 +55,15 @@ I used HTMl to create the following:
 - [x] A websocket will be used to implement a chat between the main user (my sister Kaylie) and all the other users
 - [x] Images will be shown in the store page, I am still working on getting the item tabs to line up before putting images in, but until then, I have an image on the main page as a placeholder for an embedded instagram gallery.
 
-### ❌ CSS deliverable (not complete)
+### ✅ CSS deliverable
 
 CSS implemented the following:
 
 - [x] fonts, and text sizes for headers and words. My sister picken out Goblin One and Newsreader from Google.fonts, so I have an API call importing those fonts at the top of my css file
 - [x] Bootsrap was imported as well, I am working on using their available CSS classes to increase the professionalism and responsiveness of my site.
-- [ ] Container placement and padding was set up
+- [x] Container placement and padding was set up
 - [x] Login will be made pretty
 - [x] Navbar functionality and responsiveness
-- [ ] Image placement and gallery design
+- [x] Image placement and gallery design
 
 ### ❌ Javascript deliverable (not complete)
