@@ -1,0 +1,45 @@
+[
+    {
+        "title": "Rolly Chickens",
+        "description": "This is product 1",
+        "price": 15,
+        "cardId": "rollyChicken",
+        "picturePath": "/pics/creations/kaylieschickens.jpeg"
+
+    },
+    {
+        "title": "Monster Friend",
+        "description": "This is product 2",
+        "price": 40,
+        "cardId": "monsterFriend",
+        "picturePath": "/pics/creations/monster.jpeg"
+    },
+    {
+        "title": "Sitting Dino",
+        "description": "This is product 3",
+        "price": 20,
+        "cardId": "sittingDino",
+        "picturePath": "/pics/creations/chillinDino.jpeg"
+    },
+    {
+        "title": "Strawberry Cow",
+        "description": "This is product 3",
+        "price": 40,
+        "cardId": "strawberryCow",
+        "picturePath": "/pics/creations/strawberryCow.jpeg"
+    },
+    {
+        "title": "Purple Cow",
+        "description": "This is product 4",
+        "price": 40,
+        "cardId": "purpleCow",
+        "picturePath": "/pics/creations/purpleCow.jpeg"
+    },
+    {
+        "title": "Sloth",
+        "description": "This is product 5",
+        "price": 20,
+        "cardId": "sloth",
+        "picturePath": "/pics/creations/sloth.jpeg"
+    }
+]
