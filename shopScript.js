@@ -1,8 +1,5 @@
 // Dallin Jackson 2/14/24
 // kayliescreations.biz
-// classes:
-// - shopClass:
-//      takes the JSON list of shopCards and then defines a callable function that makes all the cards
 
 class shop {
     constructor(shopCardsJson) {
