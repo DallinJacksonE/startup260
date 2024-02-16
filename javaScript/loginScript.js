@@ -5,6 +5,10 @@ const loginForm = document.getElementById("login-form");
 
 // Assume this function is called after successful login
 function onLoginSuccess() {
+    window.location.href = 'index.html';
+}
+
+function adminLoginSuccess() {
     window.location.href = 'kayliesPage.html';
 }
 
@@ -22,9 +26,14 @@ loginForm.addEventListener("submit", (e) => {
         .then(response => response.json())
         .then(users => {
             // Check if user exists and password is correct
-            const user = (username in users) && users[username][0] === password && users[username][1];
+            const user = (username in users) && users[username][0] === password;
             if (user) {
-                onLoginSuccess();
+                if (users[username][1]) {
+                    adminLoginSuccess();
+                } else {
+                    onLoginSuccess();
+                }
+                
             } else {
                 loginError();
             }

@@ -1,7 +1,7 @@
 {
     "admin": ["Root", true],
     "kaylie": ["Yarngorl", true],
-    "fake": ["fake", false]
+    "fake": ["fake@fake", false]
 
 
 }
