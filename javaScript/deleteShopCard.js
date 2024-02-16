@@ -1,22 +1,6 @@
 //Dallin Jackson 2/14/24
 //kayliescreations.biz
 
-{/* <select class="form-select" aria-label="Default select example">
-  <option selected>Open this select menu</option>
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
-</select> 
-<button type="button" class="btn btn-danger">Danger</button>
-
-
-<div class="d-grid gap-2 col-6 mx-auto">
-  <button class="btn btn-primary" type="button">Button</button>
-  <button class="btn btn-primary" type="button">Button</button>
-</div>
-*/}
-
-
 let shopCardsJson;
 fetch('/shopCards.json')
     .then(response => {
