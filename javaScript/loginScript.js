@@ -2,7 +2,7 @@
 //kayliescreations.biz
 
 const loginForm = document.getElementById("login-form");
-
+const signInForm = document.getElementById("");
 // Assume this function is called after successful login
 function onLoginSuccess() {
     window.location.href = 'index.html';
@@ -12,7 +12,7 @@ function adminLoginSuccess() {
     window.location.href = 'kayliesPage.html';
 }
 
-function loginError(wrongFields) {
+function loginError() {
     console.log("Failed attempt");
 }
 

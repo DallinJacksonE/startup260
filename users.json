@@ -1,7 +1,40 @@
-{
-    "admin": ["Root", true],
-    "kaylie": ["Yarngorl", true],
-    "fake": ["fake@fake", false]
-
-
-}
+[
+    {
+        "username": "kaylie",
+        "password": "Kronos",
+        "email": "kaylie.beth.jackson@gmail.com",
+        "isAdmin": true,
+        "lastLogin": "timeStampHere",
+        "isActive": false,
+        "isOnline": false
+    },
+    {
+        "username": "root",
+        "password": "IamRoot",
+        "email": "dallin.e.jackson@gmail.com",
+        "isAdmin": true,
+        "chatData": [],
+        "address": {
+            "addresLine1": "443 South State Street",
+            "addressLine2": "APT 208",
+            "city": "Provo",
+            "state": "UT",
+            "zip": "84606"
+        },
+        "orders": [
+            {
+                "productID": "sloth",
+                "name": "sloth",
+                "color": "default",
+                "dateOrdered": "MM/DD/YYYY",
+                "dateNeeded": "MM/DD/YYYY",
+                "comments": "a normal sloth",
+                "completed": false,
+                "shipped": false
+            }
+        ],
+        "emailWhenStatusApdate": true,
+        "lastLogin": "timeStampHere",
+        "isOnline": false
+    }
+]
