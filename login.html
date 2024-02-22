@@ -53,6 +53,17 @@
 
                 <form>
                     <h1 class="h3 mb-3 fw-normal">Make an account</h1>
+                    <div class="form-floating">
+                      
+                      <input type="text" class="form-control" id="inputFirstName" placeholder="First" required>
+                      <label for="floatingInput">First Name</label>
+                    </div>
+
+                    <div class="form-floating">
+                      
+                      <input type="text" class="form-control" id="inputLastName" placeholder="Last" required>
+                      <label for="floatingInput">Last Name</label>
+                    </div>
 
                     <div class="form-floating">
                       <input type="email" class="form-control" id="floatingInput" placeholder="you@email.com" required>
@@ -171,7 +182,7 @@
         </div>
             <div class="right-column" id="loginform">
                 <main class="form-signin w-100 m-auto">
-                    <form>
+                    <form id="login-form">
                       <h1 class="h3 mb-3 fw-normal">Sign in</h1>
                       <div class="form-floating">
                         <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" required>
