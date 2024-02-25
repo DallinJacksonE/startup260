@@ -4,42 +4,47 @@
         "description": "This is product 1",
         "price": 15,
         "cardId": "rollyChicken",
-        "picturePath": "/pics/creations/kaylieschickens.jpeg"
-
+        "picturePath": "/pics/creations/kaylieschickens.jpeg",
+        "stock": 5
     },
     {
         "title": "Monster Friend",
         "description": "This is product 2",
         "price": 40,
         "cardId": "monsterFriend",
-        "picturePath": "/pics/creations/monster.jpeg"
+        "picturePath": "/pics/creations/monster.jpeg",
+        "stock": 0
     },
     {
         "title": "Sitting Dino",
         "description": "This is product 3",
         "price": 20,
         "cardId": "sittingDino",
-        "picturePath": "/pics/creations/chillinDino.jpeg"
+        "picturePath": "/pics/creations/chillinDino.jpeg",
+        "stock": 5
     },
     {
         "title": "Strawberry Cow",
         "description": "This is product 3",
         "price": 40,
         "cardId": "strawberryCow",
-        "picturePath": "/pics/creations/strawberryCow.jpeg"
+        "picturePath": "/pics/creations/strawberryCow.jpeg",
+        "stock": 5
     },
     {
         "title": "Purple Cow",
         "description": "This is product 4",
         "price": 40,
         "cardId": "purpleCow",
-        "picturePath": "/pics/creations/purpleCow.jpeg"
+        "picturePath": "/pics/creations/purpleCow.jpeg",
+        "stock": 5
     },
     {
         "title": "Sloth",
         "description": "This is product 5",
         "price": 20,
         "cardId": "sloth",
-        "picturePath": "/pics/creations/sloth.jpeg"
+        "picturePath": "/pics/creations/sloth.jpeg",
+        "stock": 5
     }
 ]
