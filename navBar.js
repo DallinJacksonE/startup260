@@ -186,15 +186,6 @@ function loadNavBar() {
         gallery.appendChild(galleryLink);
         ul.appendChild(gallery);
 
-        let status = document.createElement("li");
-        status.className = "nav-item";
-        let statusLink = document.createElement("a");
-        statusLink.className = "nav-link";
-        statusLink.href = "orderstatus.html";
-        statusLink.textContent = "Status";
-        status.appendChild(statusLink);
-        ul.appendChild(status);
-
         let about = document.createElement("li");
         about.className = "nav-item";
         let aboutLink = document.createElement("a");
@@ -221,7 +212,7 @@ function loadNavBar() {
         header[0].appendChild(navBar);
 
         // Create an array of all nav links
-        let navLinks = [homeLink, aboutLink, galleryLink, statusLink, loginLink];
+        let navLinks = [homeLink, aboutLink, galleryLink, loginLink];
 
         // Get the current URL
         let currentUrl = window.location.href;
