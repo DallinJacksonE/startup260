@@ -204,7 +204,7 @@ footer {
   /* Darker chat container */
   .darker {
     border-color: #ccc;
-    background-color: #5fa8d3;
+    background-color: #7fbadc;
   }
   
   /* Clear floats */
@@ -241,6 +241,14 @@ footer {
     float: left;
     color: #dbdbdb;
   }
+
+  /* Style text in chat */
+    .chat-text {
+        color: #000000;
+        size: 1.1em;
+        padding: .7em;
+        font-weight: medium;
+    }
 
 @media (max-width: 768px) {
     .columns-container {

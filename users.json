@@ -13,7 +13,9 @@
         "password": "IamRoot",
         "email": "dallin.e.jackson@gmail.com",
         "isAdmin": true,
-        "chatData": [],
+        "chatData": [{ "sender": "kaylie", "message": "Hey, how are you?", "timeStamp": "11:04" },
+        { "sender": "root", "message": "I'm doing good, how are you?", "timeStamp": "13:36" },
+        { "sender": "kaylie", "message": "I'm doing good too, thanks for asking.", "timeStamp": "14:00" }],
         "address": {
             "addresLine1": "443 South State Street",
             "addressLine2": "APT 208",

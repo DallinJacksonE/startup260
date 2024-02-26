@@ -8,7 +8,7 @@
  */
 
 function loadNavBar() {
-    let user = JSON.parse(localStorage.getItem("user"));
+    let user = JSON.parse(localStorage.getItem("user")) || JSON.parse(sessionStorage.getItem("user"));
     let header = document.getElementsByTagName("header");
     if (user) {
         let navBar = document.createElement("nav");
@@ -66,7 +66,7 @@ function loadNavBar() {
         let ticketLink = document.createElement("a");
         ticketLink.className = "nav-link";
         ticketLink.href = "ticketpage.html";
-        ticketLink.textContent = "Ticket Page";
+        ticketLink.textContent = "Orders";
         ticket.appendChild(ticketLink);
         ul.appendChild(ticket);
 
