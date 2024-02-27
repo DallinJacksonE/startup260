@@ -15,7 +15,8 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body onload="displayChat()">
+  <script src="chatScript.js"></script>
   <header>
   </header>
   <script src="navBar.js"></script>
@@ -23,7 +24,7 @@
     <div class="columns-container">
       <div class="left-column">
         <h2>Chat With Kaylie</h2>
-        <div class="chatbox">
+        <div class="chatbox" id="chatbox">
           <div class="messages" id="messages">
 
           </div>
@@ -41,7 +42,6 @@
           </div>
         </div>
         </div>
-      </div>
       <div class="right-column" id="ticketform">
         <h2>Your Order</h2>
         <div class="ticketform">

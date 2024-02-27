@@ -11,6 +11,8 @@
     {
         "username": "root",
         "password": "IamRoot",
+        "firstName": "Dallin",
+        "lastName": "Jackson",
         "email": "dallin.e.jackson@gmail.com",
         "isAdmin": true,
         "chatData": [{ "sender": "kaylie", "message": "Hey, how are you?", "timeStamp": "11:04" },
@@ -31,6 +33,40 @@
                 "dateOrdered": "MM/DD/YYYY",
                 "dateNeeded": "MM/DD/YYYY",
                 "comments": "a normal sloth",
+                "completed": false,
+                "shipped": false
+            }
+        ],
+        "emailWhenStatusApdate": true,
+        "lastLogin": "timeStampHere",
+        "isOnline": false
+    },
+    {
+        "username": "TA",
+        "password": "IamAwesome",
+        "firstName": "Teacher",
+        "lastName": "Assistant",
+        "email": "csTA@fake.edu",
+        "isAdmin": false,
+        "chatData": [{ "sender": "kaylie", "message": "Hey, how are you?", "timeStamp": "11:04" },
+        { "sender": "root", "message": "I'm doing good, how are you?", "timeStamp": "13:36" },
+        { "sender": "kaylie", "message": "I'm doing good too, thanks for asking.", "timeStamp": "14:00" },
+        { "sender": "TA", "message": "I want a chicken", "timeStamp": "14:01" }],
+        "address": {
+            "addresLine1": "Talmage Building, Brigham Young University",
+            "addressLine2": "Room 208",
+            "city": "Provo",
+            "state": "UT",
+            "zip": "84606"
+        },
+        "orders": [
+            {
+                "productID": "rollyChicken",
+                "name": "Rolly Chickens",
+                "color": "default",
+                "dateOrdered": "MM/DD/YYYY",
+                "dateNeeded": "MM/DD/YYYY",
+                "comments": "salt and pepper",
                 "completed": false,
                 "shipped": false
             }

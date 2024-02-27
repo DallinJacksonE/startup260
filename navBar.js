@@ -10,9 +10,10 @@
 function loadNavBar() {
     let user = JSON.parse(localStorage.getItem("user")) || JSON.parse(sessionStorage.getItem("user"));
     let header = document.getElementsByTagName("header");
+    // If the user is logged in (defined in local storage or session storage)
     if (user) {
         let navBar = document.createElement("nav");
-        navBar.className = "navbar sticky-top navbar-expand-lg navbar-light bg-light ";
+        navBar.className = "navbar sticky-top navbar-expand-xl navbar-light bg-light ";
 
         let container = document.createElement("div");
         container.className = "container-fluid";
@@ -20,7 +21,7 @@ function loadNavBar() {
         let brand = document.createElement("a");
         brand.className = "navbar-brand";
         brand.href = "index.html";
-        brand.style = "font-family: 'Goblin One', cursive; color: #1b4965; font-size: 2em;";
+        brand.style = "font-family: 'Goblin One', cursive; color: #1b4965; font-size: 1.5em;";
         brand.textContent = "Kaylie's Creations";
 
         let button = document.createElement("button");
@@ -116,15 +117,8 @@ function loadNavBar() {
         navBar.appendChild(container);
         header[0].appendChild(navBar);
 
-
-
-        // Create an array of all nav links
         let navLinks = [homeLink, aboutLink, shopLink, statusLink, ticketLink, logoutLink, adminLink];
-
-        // Get the current URL
         let currentUrl = window.location.href;
-
-        // Loop through the nav links
         for (let link of navLinks) {
             // If the href of the nav link matches the current URL
             if (link.href === currentUrl) {

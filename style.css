@@ -7,7 +7,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* border: orange dashed 1px; */
+    border: orange dashed 1px;
     font-family: 'Newsreader', serif;
     
 }
@@ -71,7 +71,7 @@ h1, h2, h3 {
 }
 
 .left-column {
-    
+    margin: .5em;
     width: 50%;
     float: left;
     height: fit-content;
@@ -80,7 +80,7 @@ h1, h2, h3 {
 }
 
 .right-column {
-    
+    margin: .5em;
     width: 50%;
     float: right;
     /* border: purple solid 1px; */
@@ -109,12 +109,11 @@ main {
 }
 
 #frontpagelefttext {
-    width: 70%;
     float: left;
     
 }
 
-#instagram-gallery {
+#instagram {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -156,10 +155,6 @@ footer {
     height: fit-content;
 }
 
-.instagram {
-    height: fit-content;
-
-}
 
 /* ---CHAT CSS--- */
 .chatbox{
@@ -171,14 +166,12 @@ footer {
 }
 
 .messages {
-    max-height: 630px;
+    max-height: 600px;
     overflow-y: scroll;
 }
 
 .messageInput {
     background-color: #1b4965;
-    
-
 }
 
 .messageInput img {
