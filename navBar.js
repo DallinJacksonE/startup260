@@ -110,6 +110,16 @@ function loadNavBar() {
             ul.appendChild(admin);
         }
 
+        let name = document.createElement("li");
+        name.className = "nav-item";
+        let nameLink = document.createElement("a");
+        nameLink.className = "nav-link";
+        nameLink.href = "userpage.html";
+        let personProfile = "👤";
+        nameLink.textContent = personProfile + ": " + user["username"];
+        name.appendChild(nameLink);
+        ul.appendChild(name);
+
         div.appendChild(ul);
         container.appendChild(brand);
         container.appendChild(button);

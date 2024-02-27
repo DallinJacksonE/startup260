@@ -194,7 +194,7 @@ function buildShopCardForm(shopCardsJson) {
     let idLabel = document.createElement('label');
     idLabel.className = 'form-label';
     idLabel.textContent = 'itemID: Needs to be Unique';
-    div4.appendChild(idLabel);
+    div5.appendChild(idLabel);
 
     let idInput = document.createElement('input');
     idInput.className = 'form-control';
@@ -202,7 +202,7 @@ function buildShopCardForm(shopCardsJson) {
     idInput.required = true;
     idInput.type = 'text';
     idInput.id = 'itemID';
-    div4.appendChild(idInput);
+    div5.appendChild(idInput);
     
     let div6 = document.createElement('div');
     div6.className = 'mb-3';
@@ -233,6 +233,50 @@ function buildShopCardForm(shopCardsJson) {
     container.appendChild(form);
 }
 
+/**
+ * takes the inputs from the shop card form and adds a new shop card to the shopCardsJson
+ * 
+ * @param {*} shopCardsJson 
+ */
 function addShopCard(shopCardsJson) {
+
+    let password = document.getElementById('password').value;
+    let title = document.getElementById('title').value;
+    let price = document.getElementById('price').value;
+    let description = document.getElementById('exampleFormControlTextarea1').value;
+    let itemID = document.getElementById('itemID').value;
+    let pictureFile = document.getElementById('pictureFile').value;
+
+    if (password !== 'Kronos') {
+        alert('Incorrect Password');
+        return;
+    }
+
+    let newCard = {
+        "cardId": itemID,
+        "title": title,
+        "price": price,
+        "description": description,
+        "picture": pictureFile,
+        "stock": 1
+    }
+
+    shopCardsJson.push(newCard);
+
+    fetch('/shopCards.json', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(shopCardsJson),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            rebuildShopDeleteForm(shopCardsJson);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
 
 }
