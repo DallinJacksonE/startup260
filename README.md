@@ -66,12 +66,12 @@ CSS implemented the following:
 - [x] Navbar functionality and responsiveness
 - [x] Image placement and gallery design
 
-### ❌ Javascript deliverable (not complete)
+### ✅ Javascript deliverable (not complete)
 
 - [x] A login that will validate credentials from a JSON file, then store the user data locally for other webpages to access (for security need to update so password isn't saved locally)
 - [x] A chat window that will let kaylie toggle between all registered users and the chat data she has with them (websocket)
 - [x] A form to add shop cards (mock database)
 - [x] A form to delete shop cards (mock database)
-- [ ] A responsive navbar that gives visitors a limited access to functions like chat and ordering, and logged in users full customer functionaliry, and admin users access to the admin page (responsive to local data)
+- [x] A responsive navbar that gives visitors a limited access to functions like chat and ordering, and logged in users full customer functionaliry, and admin users access to the admin page (responsive to local data)
 - [x] a chat with Kaylie available to all logged in users (websocket)
 - [x] an order cart where people can submit an order and see submitted orders (mock database)
