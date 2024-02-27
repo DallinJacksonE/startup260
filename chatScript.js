@@ -61,6 +61,9 @@ async function displayChat(customer) {
     let messageInput = document.createElement("div");
     messageInput.className = "messageInput";
     let img = document.createElement("img");
+    if (window.location.href === "kayliesPage.html") {
+        img.src = "android-chrome-512x512.png";
+    }
     img.src = "greylogo.png";
     img.alt = "Avatar";
     img.className = "right";

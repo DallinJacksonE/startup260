@@ -24,13 +24,13 @@ function login() {
                 if (user["email"] === email && user["password"] === password) {
                     if (rememberMe) {
                         localStorage.setItem("user", JSON.stringify(user));
-                        console.log("User saved to local storage")
+                        console.log("User saved to local storage");
                     } else {
                         sessionStorage.setItem("user", JSON.stringify(user));
-                        console.log("User saved to session storage")
+                        console.log("User saved to session storage");
                     }
-                    console.log("Logged in")
-                    window.location.href = "index.html"
+                    console.log("Logged in");
+                    window.location.href = "index.html";
                 }
             });
         })
@@ -40,6 +40,7 @@ function login() {
 }
 
 function logout() {
-    localStorage.removeItem("user")
-    window.location.href = "index.html"
+    localStorage.removeItem("user");
+    sessionStorage.removeItem("user");
+    window.location.href = "index.html";
 }
