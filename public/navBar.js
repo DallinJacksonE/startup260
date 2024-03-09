@@ -9,6 +9,7 @@
 
 function loadNavBar() {
     let user = JSON.parse(localStorage.getItem("user")) || JSON.parse(sessionStorage.getItem("user"));
+
     let header = document.getElementsByTagName("header");
     // If the user is logged in (defined in local storage or session storage)
     if (user) {

@@ -1,3 +1,0 @@
-// Dallin Jackson
-// kayliescreations.biz
-
