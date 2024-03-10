@@ -19,11 +19,11 @@
           <main class="form-signin w-100 m-auto">
             <form id="login-form">
               <h1 class="h3 mb-3 fw-normal">Sign in</h1>
-              <div class="form-floating">
+              <div class="form-floating" id="signInEmailContainer">
                 <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com" required>
                 <label for="floatingInput">Email address</label>
               </div>
-              <div class="form-floating">
+              <div class="form-floating" id="signInPasswordContainer">
                 <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password" required>
                 <label for="floatingPassword">Password</label>
               </div>
@@ -45,52 +45,52 @@
             <div class="right-column" id="loginform">
               <main class="form-signin w-100 m-auto">
 
-                <form>
+                <form id="create-account">
                     <h1 class="h3 mb-3 fw-normal">Make an account</h1>
                     <div class="form-floating">
                       
-                      <input type="text" class="form-control" id="inputFirstName" placeholder="First" required>
-                      <label for="floatingInput">First Name</label>
+                      <input type="text" class="form-control" name="firstName" id="inputFirstName" placeholder="First" required>
+                      <label for="inputFirstName">First Name</label>
                     </div>
 
                     <div class="form-floating">
                       
-                      <input type="text" class="form-control" id="inputLastName" placeholder="Last" required>
-                      <label for="floatingInput">Last Name</label>
+                      <input type="text" class="form-control" name="lastName" id="inputLastName" placeholder="Last" required>
+                      <label for="inputLastName">Last Name</label>
                     </div>
 
                     <div class="form-floating">
-                      <input type="email" class="form-control" id="floatingInput" placeholder="you@email.com" required>
-                      <label for="floatingInput">Email address</label>
+                      <input type="email" class="form-control" name="email" id="floatingCreateInput" placeholder="you@email.com" required>
+                      <label for="floatingCreateInput">Email address</label>
                     </div>
 
                     <div class="form-floating">
                       
-                      <input type="password" class="form-control" id="floatingPassword" placeholder="Password" required>
-                      <label for="floatingPassword">Password</label>
+                      <input type="password" class="form-control" name="password" id="floatingCreatePassword" placeholder="Password" required>
+                      <label for="floatingCreatePassword">Password</label>
                       <div id="emailHelp" class="form-text">Must contatin 8 characters or digits.</div>
                     </div>
 
                     <div class="form-floating">
                       
-                      <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" required>
-                      <label for="floatingInput">Address</label>
+                      <input type="text" class="form-control" name="address" id="inputAddress" placeholder="1234 Main St" required>
+                      <label for="inputAddress">Address</label>
                     </div>
 
                     <div class="form-floating">
                       
-                      <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" >
-                      <label for="floatingInput">Address 2 (Not Required)</label>
+                      <input type="text" class="form-control" name="address2" id="inputAddress2" placeholder="Apartment, studio, or floor" >
+                      <label for="inputAddress2">Address 2 (Not Required)</label>
                     </div>
 
                     <div class="form-floating">
                       
-                      <input type="text" class="form-control" id="inputCity" placeholder="City" required>
-                      <label for="floatingInput">City</label>
+                      <input type="text" class="form-control" name="city" id="inputCity" placeholder="City" required>
+                      <label for="inputCity">City</label>
                     </div>
 
                     <div class="form-floating">
-                      <select id="inputState" class="form-select" required>
+                      <select id="inputState" name="state" class="form-select" required>
                         <option selected disabled value="">-Choose-</option>
                         <option value="AL">Alabama</option>
                         <option value="AK">Alaska</option>
@@ -143,13 +143,13 @@
                         <option value="WI">Wisconsin</option>
                         <option value="WY">Wyoming</option>
                     </select>
-                    <label for="floatingInput">State</label>
+                    <label for="inputState">State</label>
                     </div>
 
                     <div class="form-floating">
                       
-                      <input type="text" class="form-control" id="inputZip" placeholder="Zip" required>
-                      <label label for="floatingInput">Zip</label>
+                      <input type="text" class="form-control" name="zip" id="inputZip" placeholder="Zip" required>
+                      <label label for="inputZip">Zip</label>
                     </div>
 
                     <div id="emailHelp" class="form-text">We'll never share your information with anyone else.</div>
@@ -157,7 +157,7 @@
                     <div class="col-12">
 
                       <div class="form-check text-start my-3">
-                        <input class="form-check-input" type="checkbox" id="gridCheck" required>
+                        <input class="form-check-input" name="consent" type="checkbox" id="gridCheck" required>
                         <label class="form-check-label" for="gridCheck">
                           I consent to Kaylie having my information to send me my orders and contact me if necassry.
                         </label>
@@ -166,7 +166,7 @@
                     </div>
 
                     <div class="col-12">
-                      <button type="submit" class="btn btn-primary w-100 py-2">Sign up</button>
+                      <button type="submit" class="btn btn-primary w-100 py-2" onclick="createAccount()">Sign up</button>
                     </div>
                     <div style="height: 4em"></div>
 

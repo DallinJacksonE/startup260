@@ -26,7 +26,7 @@ class shopCard {
 }
 
 let shopCardsJson;
-fetch('/shopCards.json')
+fetch('/api/shopCards')
     .then(response => {
         if (!response.ok) {
             throw new Error("HTTP error " + response.status);

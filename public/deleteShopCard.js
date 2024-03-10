@@ -2,7 +2,7 @@
 //kayliescreations.biz
 
 let shopCardsJson;
-fetch('/shopCards.json')
+fetch('/api/shopCards')
     .then(response => {
         if (!response.ok) {
             throw new Error("HTTP error " + response.status);
@@ -10,6 +10,7 @@ fetch('/shopCards.json')
         return response.json();
     })
     .then(data => {
+        
         shopCardsJson = data;
         console.log('Shop Cards: ', shopCardsJson);
         buildShopCardForm(shopCardsJson);
@@ -30,13 +31,13 @@ function deleteShopCard(shopCardsJson) {
     let index = shopCardsJson.indexOf(cardToDelete);
     shopCardsJson.splice(index, 1);
 
-    fetch('/shopCards.json', {
+    fetch('/api/updateShopCards', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(shopCardsJson),
-    })
+        body: JSON.stringify(shopCardsJson)
+        })
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
@@ -263,7 +264,7 @@ function addShopCard(shopCardsJson) {
 
     shopCardsJson.push(newCard);
 
-    fetch('/shopCards.json', {
+    fetch('/api/updateShopCards', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

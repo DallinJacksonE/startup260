@@ -15,15 +15,30 @@ app.use(express.static('public'));
 var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
-// GetScores
-apiRouter.get('/scores', (_req, res) => {
-  res.send(scores);
+// Create a new user
+apiRouter.post('/createAccount', (req, res) => {
+  let successBool = addUser(req.body);
+  res.send(successBool);
 });
 
 // Authenticate a login attempt
 apiRouter.post('/authenticate', (req, res) => {
   let user = authenticateUser(req.body);
   res.send(user);
+});
+
+// Serve up the shop cards
+app.get('/shopCards', (_req, res) => {
+  shopCardData = updateShopCards();
+  res.send(shopCardData);
+});
+
+// Update the shop cards
+apiRouter.post('/updateShopCards', (req, res) => {
+  console.log('Request body: ', req.body);
+  let shopCardData = updateShopCards(req.body);
+  console.log('Shop Cards: ', shopCardData);
+  res.send(shopCardData);
 });
 
 // Return the application's default page if the path is unknown
@@ -53,4 +68,41 @@ function authenticateUser(loginInfo) {
     user = {error: "Invalid email or password"};
   }
   return user;
+}
+
+function addUser(userInfo) {
+  let valid = true;
+  let user;
+  let users = JSON.parse(fs.readFileSync('users.json'));
+  // Check if the email is already in use
+  for (let i = 0; i < users.length; i++) {
+    if (users[i].email === userInfo.email) {
+      valid = false;
+      break;
+    }
+  }
+  if (valid) {
+    users.push(userInfo);
+    fs.writeFileSync('users.json', JSON.stringify(users));
+    user = userInfo;
+  }
+  if (!valid) {
+    user = {error: "This email already exists with a user account. Please log in or use a different email address."};
+  }
+  return user;
+}
+
+function updateShopCards(newCardData = null) {
+  let shopCardData;
+  if (newCardData) {
+  //new data, write it to the file and return it
+    shopCardData = JSON.parse(fs.readFileSync('shopCards.json'));
+    shopCardData.push(newCardData);
+    fs.writeFileSync('shopCards.json', JSON.stringify(newCardData));
+  } else {  
+  //no new data, just read and return the current data
+  shopCardData = JSON.parse(fs.readFileSync('shopCards.json'));
+  }
+  return shopCardData;
+
 }
