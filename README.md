@@ -78,6 +78,8 @@ CSS implemented the following:
 
 ### ❌ Service Deliverable
 
+- [x] Convert startup to a webservice
+- [x] Write middleware for website functionality
 - [x] Make the login and new account functions work with the service
 - [x] Make the add shop card and delete shop card functionality work with service
 - [x] Have the chat data be updated as users write to the chat
