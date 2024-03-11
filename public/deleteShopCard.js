@@ -2,7 +2,7 @@
 //kayliescreations.biz
 
 let shopCardsJson;
-fetch('/api/shopCards')
+fetch('/api/getShopCards')
     .then(response => {
         if (!response.ok) {
             throw new Error("HTTP error " + response.status);
@@ -240,6 +240,8 @@ function buildShopCardForm(shopCardsJson) {
  * @param {*} shopCardsJson 
  */
 function addShopCard(shopCardsJson) {
+
+    //TODO: make sure that the picture is uploaded to the server and the path is stored in the shop card
 
     let password = document.getElementById('password').value;
     let title = document.getElementById('title').value;

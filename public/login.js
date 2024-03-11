@@ -48,8 +48,8 @@ async function login() {
 }
 
 function logout() {
-    localStorage.removeItem("user");
-    sessionStorage.removeItem("user");
+    localStorage.clear();
+    sessionStorage.clear();
     window.location.href = "index.html";
 }
 
@@ -83,6 +83,16 @@ function createAccount() {
     let state = createAccount["state"].value;
     let zip = createAccount["zip"].value;
     let consent = createAccount["consent"].checked;
+
+    //chat code for welcome message
+    let timeStampHours = new Date().getHours();
+    let timeStampMinutes = new Date().getMinutes();
+    if (timeStampMinutes < 10) {
+        timeStampMinutes = "0" + timeStampMinutes;
+    }
+    let timeStampString = timeStampHours + ":" + timeStampMinutes;
+    let timeStamp = timeStampString;
+
     if (consent) {
         let newUser = {
             firstName: firstName,
@@ -102,6 +112,7 @@ function createAccount() {
             emailWhenStatusUpdate: false
             
         }
+        newUser.chatData.push({ "sender": "Kaylie Jackson", "message": "Welcome to my website!", "timeStamp": "Kaylie Jackson" + ': ' + timeStamp });
         console.log("New User: ", newUser);
         localStorage.setItem("newUser", JSON.stringify(newUser));
         fetch('/api/createAccount', {

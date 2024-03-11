@@ -42,6 +42,17 @@ apiRouter.post('/updateShopCards', (req, res) => {
   res.send(shopCardData);
 });
 
+// Send the user data (without passwords) to the front-end
+apiRouter.get('/safeUserData', (_req, res) => {
+  let userData = safeUserData();
+  res.send(userData);
+});
+
+apiRouter.post('/updateUserData', (req, res) => {
+  let successBool = updateUserData(req.body);
+  res.send(successBool);
+});
+
 // Return the application's default page if the path is unknown
 app.use((_req, res) => {
   res.sendFile('index.html', { root: 'public' });
@@ -106,4 +117,32 @@ function updateShopCards(newCardData = null) {
   }
   return shopCardData;
 
+}
+
+function safeUserData() {
+  let userData = JSON.parse(fs.readFileSync('users.json'));
+  for (let i = 1; i < userData.length; i++) {
+    delete userData[i].password;
+  }
+  return userData;
+}
+
+function updateUserData(updatedUserData) {
+  
+  let userData = JSON.parse(fs.readFileSync('users.json'));
+  let successBool = false;
+
+  for (let i = 0; i < userData.length; i++) {
+    if (userData[i].email === updatedUserData.email) {
+      updatedUserData.password = userData[i].password;
+      userData[i] = updatedUserData;
+      successBool = true;
+      break;
+    }
+  }
+
+  if (successBool) {
+    fs.writeFileSync('users.json', JSON.stringify(userData));
+  }
+  return {success: successBool};
 }

@@ -1,25 +1,25 @@
 //Dallin Jackson 2/14/24
 //kayliescreations.biz
 
-async function displayChat(customer) {
-    // let userData = await fetch('./users.json')
-    // .then(response => response.json())
-    // .then(data => {
-    //     return data;
-    // })
-    // .catch(error => {
-    //     console.error('Error:', error);
-    // });
+async function displayChat(customer = null) {
 
-    if (customer === undefined) {
+    let adminBool = false;
+
+    if (customer === null) {
         customer = JSON.parse(localStorage.getItem("user")) || JSON.parse(sessionStorage.getItem("user"));
         if (!customer) {
             window.location.href = "login.html";
+        } else {
+            userChatData = customer["chatData"];
         }
+        
+    } else {
+        admin = JSON.parse(localStorage.getItem("admin")) || JSON.parse(sessionStorage.getItem("admin"));
+        userChatData = customer["chatData"];
+        adminBool = true;
     }
     
-    //let user = userData.find(user => user["username"] === loggedInUser["username"]);
-    let userChatData = customer["chatData"];
+    
     let chatBox = document.getElementById("chatbox");
     chatBox.innerHTML = '';
     let chatContainer = document.createElement("messages");
@@ -34,7 +34,7 @@ async function displayChat(customer) {
         let p = document.createElement("p");
         let span = document.createElement("span");
 
-        if (userChatData[i]["sender"] === "kaylie") {
+        if (userChatData[i]["sender"] === "Kaylie Jackson") {
             chat.className = "chat-container darker";
             img.src = "android-chrome-512x512.png";
             img.alt = "KaylieAvatar";
@@ -61,10 +61,12 @@ async function displayChat(customer) {
     let messageInput = document.createElement("div");
     messageInput.className = "messageInput";
     let img = document.createElement("img");
-    if (window.location.href === "kayliesPage.html") {
+    if (adminBool) {
         img.src = "android-chrome-512x512.png";
+    } else {
+        img.src = "greylogo.png";
     }
-    img.src = "greylogo.png";
+    
     img.alt = "Avatar";
     img.className = "right";
     let form = document.createElement("form");
@@ -115,24 +117,21 @@ function scrollToBottom() {
     
 }
 
-async function sendMessage(customer) {
+async function sendMessage(customer = null) {
 
-    // let userData = await fetch('./users.json')
-    // .then(response => response.json())
-    // .then(data => {
-    //     return data;
-    // })
-    // .catch(error => {
-    //     console.error('Error:', error);
-    // });
+    let adminBool = false;
 
-    if (customer === undefined) {
+    if (customer === null) {
         customer = JSON.parse(localStorage.getItem("user")) || JSON.parse(sessionStorage.getItem("user"));
         if (!customer) {
             window.location.href = "login.html";
         }
+        
+    } else {
+        admin = JSON.parse(localStorage.getItem("user")) || JSON.parse(sessionStorage.getItem("user"));
+        adminBool = true;
     }
-    // let user = userData.find(user => user["username"] === loggedInUser["username"]);
+    
     let userChatData = customer["chatData"];
     let inputGroup = document.getElementById("input-group");
     let message = inputGroup["messageText"].value;
@@ -144,31 +143,38 @@ async function sendMessage(customer) {
     }
     let timeStampString = timeStampHours + ":" + timeStampMinutes;
     let timeStamp = timeStampString;
-    userChatData.push({ "sender": "user", "message": message, "timeStamp": timeStamp });
-    
-    // this is just until the server is set up
-    localStorage.setItem("user", JSON.stringify(customer));
-    sessionStorage.setItem("user", JSON.stringify(customer));
 
-    // will use code below when server is set up
+    let sentBy;
+    if (adminBool) {
+        sentBy = admin["firstName"] + " " + admin["lastName"];
+    } else {
+        sentBy = customer["firstName"] + " " + customer["lastName"];
+    }
 
-    // const fs = require('fs');
+    userChatData.push({ "sender": sentBy, "message": message, "timeStamp": sentBy + ': ' + timeStamp });
     
-    // let jsonData = JSON.stringify(userData, null, 2);
+    let jsonData = JSON.stringify(customer);
     
-    // fs.writeFile('data.json', jsonData, (err) => {
-    //     if (err) {
-    //         console.error('Error writing file', err);
-    //     } else {
-    //         console.log('Successfully wrote to file');
-    //     }
-    // });
+    let response = await fetch('/api/updateUserData', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: jsonData,
+    })
+    let data = await response.json();
+    console.log("Chat data update call: ", data.success);
 
     displayChat(customer);
 }
 
 async function chatSelector() {
-    let userData = await fetch('./users.json')
+
+    let userData;
+
+    try {
+
+    userData = await fetch('/api/safeUserData')
         .then(response => response.json())
         .then(data => {
             return data;
@@ -176,7 +182,7 @@ async function chatSelector() {
         .catch(error => {
             console.error('Error:', error);
         });
-    
+
     let chatBox = document.getElementById("chatbox");
     chatBox.innerHTML = '';
     let containerDiv = document.createElement("div");
@@ -189,7 +195,7 @@ async function chatSelector() {
         colDiv.className = "col";
 
         let button = document.createElement("button");
-        if (userData[i]["chatData"][userData[i]["chatData"].length-1]["sender"] !== "kaylie") {
+        if (userData[i]["chatData"][userData[i]["chatData"].length-1]["sender"] !== "Kaylie Jackson") {
             button.className = "btn btn-outline-warning";
         } else {
             button.className = "btn btn-primary";
@@ -201,8 +207,12 @@ async function chatSelector() {
         }
         colDiv.appendChild(button);
         rowDiv.appendChild(colDiv);
+        containerDiv.appendChild(rowDiv);
+        chatBox.prepend(containerDiv);
     }
 
-    containerDiv.appendChild(rowDiv);
-    chatBox.prepend(containerDiv);
+    } catch (error) {
+
+        console.error('Error:', error);
+    }
 }

@@ -79,5 +79,7 @@ CSS implemented the following:
 ### ❌ Service Deliverable
 
 - [x] Make the login and new account functions work with the service
-- [ ] Make the add shop card and delete shop card functionality work with service
-- [ ] Have the chat data be updated as users write to the chat
+- [x] Make the add shop card and delete shop card functionality work with service
+- [x] Have the chat data be updated as users write to the chat
+- [x] Have the frontend call the instagram API to get Kaylie's instagram gallery
+- [ ] Have the orders work
