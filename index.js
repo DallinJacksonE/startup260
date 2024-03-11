@@ -28,8 +28,9 @@ apiRouter.post('/authenticate', (req, res) => {
 });
 
 // Serve up the shop cards
-app.get('/shopCards', (_req, res) => {
-  shopCardData = updateShopCards();
+apiRouter.get('/getShopCards', (_req, res) => {
+  let shopCardData = updateShopCards();
+  console.log('Shop Cards backend: ', shopCardData);
   res.send(shopCardData);
 });
 

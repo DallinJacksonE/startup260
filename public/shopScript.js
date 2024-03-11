@@ -25,26 +25,18 @@ class shopCard {
 
 }
 
-let shopCardsJson;
-fetch('/api/shopCards')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("HTTP error " + response.status);
-        }
-        return response.json();
-    })
-    .then(data => {
-        shopCardsJson = data;
-        loadShop(shopCardsJson);
 
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+async function loadShop() {
+
+    try {
+
+    const response = await fetch('/api/getShopCards');
+    console.log("Response: ", response);
+    const shopCardsJson = await response.json();
+
+    console.log("Got Shop cards: ", shopCardsJson);
 
 
-
-function loadShop(shopCardsJson) {
     let kayliesShop = new shop(shopCardsJson);
         let cards = kayliesShop.createCards();
         let user = JSON.parse(localStorage.getItem("user"));
@@ -145,4 +137,10 @@ function loadShop(shopCardsJson) {
             container.appendChild(colClassDiv);
         });
     }
+
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }
+
+loadShop();
