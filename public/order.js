@@ -13,7 +13,12 @@ async function removeFromCart(itemUniqueCode, clear = false) {
         let user = userData.find(user => user.email === loggedInUser.email);
 
         if (clear) {
-            user.orders = [];
+            for (let i = 0; i < user.orders.length; i++) {
+                if (user.orders[i].submitted === false) {
+                    user.orders.splice(i, 1);
+                    i--;
+                }
+            }
         } else {    
             for (let i = 0; i < user.orders.length; i++) {
                 if (user.orders[i].uniqueId === itemUniqueCode) {
@@ -57,9 +62,12 @@ async function submitCart() {
 
         for (let i = 0; i < user.orders.length; i++) {
             if (user.orders[i].submitted === false) {
+
                 user.orders[i].submitted = true;
                 user.orders[i].dateSubmitted = timeStamp;
                 user.orders[i].dateDue = dueDateString;
+                user.orders[i].shipped = false;
+                user.orders[i].complete = false;
 
                 //get comments from the text area
                 let commentsElement = document.getElementById(user.orders[i].uniqueId);

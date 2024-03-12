@@ -22,7 +22,7 @@ async function login() {
         });
 
         const user = await response.json();
-        console.log("User: ", user);
+        
         if (user.error) {
             console.log(user.error);
             signIn["email"].value = "";
@@ -100,8 +100,8 @@ function createAccount() {
             email: email,
             password: password,
             address: {
-                addresLine1: address,
-                addresLine2: address2,
+                addressLine1: address,
+                addressLine2: address2,
                 city: city,
                 state: state,
                 zip: zip,

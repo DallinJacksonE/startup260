@@ -94,3 +94,12 @@ password: Apollo
 To see the Admin page where my sister will be adding to the shop and chatting with the users, log in with:
 email: kaylie.beth.jackson@gmail.com
 password: Kronos
+
+### TO DO
+
+- [ ] Have error messages display when the login is incorrect
+- [ ] Have a feedback response for when something is added to the cart from the shop
+- [ ] kaylie needs a table of placed orders
+- [ ] user page with submitted orders, ability to delete orders, change address, or delete account
+- [ ] PayPal integration
+- [ ] shop card picture file submission

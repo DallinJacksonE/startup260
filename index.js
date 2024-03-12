@@ -48,8 +48,15 @@ apiRouter.get('/safeUserData', (_req, res) => {
   res.send(userData);
 });
 
+// Update the user data
 apiRouter.post('/updateUserData', (req, res) => {
   let successBool = updateUserData(req.body);
+  res.send(successBool);
+});
+
+//Delete a user
+apiRouter.post('/deleteUser', (req, res) => {
+  let successBool = deleteUser(req.body);
   res.send(successBool);
 });
 
@@ -144,5 +151,25 @@ function updateUserData(updatedUserData) {
   if (successBool) {
     fs.writeFileSync('users.json', JSON.stringify(userData));
   }
+  return {success: successBool};
+}
+
+function deleteUser(userEmail) {
+
+  let userData = JSON.parse(fs.readFileSync('users.json'));
+  let successBool = false;
+
+  for (let i = 1; i < userData.length; i++) {
+    if (userData[i].email === userEmail.userEmail) {
+      userData.splice(i, 1);
+      successBool = true;
+      break;
+    }
+  }
+
+  if (successBool) {
+    fs.writeFileSync('users.json', JSON.stringify(userData));
+  } 
+
   return {success: successBool};
 }

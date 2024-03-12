@@ -21,11 +21,18 @@
     </header>
     <script src="navBar.js"></script>
     <main>
-        <p>We're still working on this page! Come back for user info and the ability to delete your account.</p>
+        <h2>Your Orders</h2>
+        <div id="userEndOrders">
+            <!-- displays stored data, and has a form to check off the completed order tickets -->
+        </div>
+        <hr \>
+        <h2>Delete Account</h2>
+        <p>Warning: This action is irreversible, orders that haven't shipped may be lost in the system, please wait until all products have been delivered or conatct Kaylie with any concerns.</p>
+        <button class="btn btn-danger" onClick="deleteAccount()">Delete Account</button>
     </main>
     
 </body>
-
+<hr \>
 <footer>
     <div class="footer">
         <p>Created by Dallin J</p>
@@ -36,5 +43,29 @@
     integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
     crossorigin="anonymous"></script>
 <script src="login.js"></script>
+<script src="showOrders.js"></script>
+<script>
+    async function deleteAccount() {
+        let user = localStorage.getItem('user') || sessionStorage.getItem('user')
+        let email = JSON.parse(user).email
+        let response = await fetch('/api/deleteUser', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userEmail: email })
+        })
+        let result = await response.json()
+        if (result.success) {
+            console.log('Account deleted');
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.href = 'index.html'
+        } else {
+            console.log('Account not deleted');
+        }
+
+    }
+</script>
 
 </html>
