@@ -116,8 +116,8 @@ function loadNavBar() {
         let nameLink = document.createElement("a");
         nameLink.className = "nav-link";
         nameLink.href = "userpage.html";
-        let personProfile = "👤";
-        nameLink.textContent = personProfile + ": " + user["firstName"];
+        let personProfile = "🧶";
+        nameLink.textContent = personProfile  + user["firstName"];
         name.appendChild(nameLink);
         ul.appendChild(name);
 

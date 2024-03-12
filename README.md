@@ -76,7 +76,7 @@ CSS implemented the following:
 - [x] a chat with Kaylie available to all logged in users (websocket)
 - [x] an order cart where people can submit an order and see submitted orders (mock database)
 
-### ❌ Service Deliverable
+### ✅ Service Deliverable
 
 - [x] Convert startup to a webservice
 - [x] Write middleware for website functionality
@@ -84,4 +84,13 @@ CSS implemented the following:
 - [x] Make the add shop card and delete shop card functionality work with service
 - [x] Have the chat data be updated as users write to the chat
 - [x] Have the frontend call the instagram API to get Kaylie's instagram gallery
-- [ ] Have the orders work
+- [x] Have the orders work
+
+**Note for TA's**
+I have a test account for you guys you can use, or you can make an account to test out the user features of adding from the shop to the orders cart and chatting.
+email: csTA@fake.edu
+password: Apollo
+
+To see the Admin page where my sister will be adding to the shop and chatting with the users, log in with:
+email: kaylie.beth.jackson@gmail.com
+password: Kronos

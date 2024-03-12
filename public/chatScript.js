@@ -22,9 +22,11 @@ async function displayChat(customer = null) {
     
     let chatBox = document.getElementById("chatbox");
     chatBox.innerHTML = '';
-    let chatContainer = document.createElement("messages");
+    let chatContainer = document.createElement("div");
     chatContainer.id = "messages";
     chatContainer.className = "messages";
+    chatContainer.style.maxHeight = '500px';
+    chatContainer.style.overflowY = 'auto';
     chatBox.appendChild(chatContainer);
 
     for (let i = 0; i < userChatData.length; i++) {

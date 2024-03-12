@@ -38,10 +38,10 @@ async function loadShop() {
 
 
     let kayliesShop = new shop(shopCardsJson);
-        let cards = kayliesShop.createCards();
-        let user = JSON.parse(localStorage.getItem("user"));
-        // Get the container where you want to display the cards
-        let container = document.getElementById('cards-container');
+    let cards = kayliesShop.createCards();
+    let user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
+    // Get the container where you want to display the cards
+    let container = document.getElementById('cards-container');
 
         
     if (user) {
@@ -85,7 +85,10 @@ async function loadShop() {
             let cardButton = document.createElement('button');
             cardButton.className = 'btn btn-primary';
             cardButton.id = `${card.cardId}`;
-            cardButton.textContent = 'Add to Ticket';
+            cardButton.textContent = 'Add to Cart';
+            cardButton.onclick = function() {
+                addToCart(card);
+            };
     
             // Add the title, description, and price to the card div
             cardBody.appendChild(cardTitle);
@@ -141,6 +144,39 @@ async function loadShop() {
     } catch (error) {
         console.error('Error:', error);
     }
+}
+
+function generateCode() {
+    return Math.random().toString(36).substring(2, 7);
+}
+
+async function addToCart(shopCard) {
+    try {
+
+        let loggedInUser = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
+        let response = await fetch('/api/safeUserData');
+        let userData = await response.json();
+        let user = userData.find(user => user.email === loggedInUser.email);
+        console.log("User: ", user);
+
+        let itemUniqueCode = generateCode();
+        let newItem = { productId: shopCard.cardId, uniqueId: itemUniqueCode, submitted: false, card: shopCard}
+        user.orders.push(newItem);
+
+        let response2 = await fetch('/api/updateUserData', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        });
+        let data = await response2.json();
+        console.log("Updated Cart: ", data);
+
+    } catch (error) {
+        console.error('Error:', error);
+    }
+    
 }
 
 loadShop();
