@@ -4,23 +4,24 @@
 
 async function buildUserTable() {
 
-
     try {
         const response = await fetch('/api/safeUserData');
         const allUsersData = await response.json();
         console.log('Admin table data call returned: ', allUsersData);
 
         
-        let adminTable = document.getElementById('userEndOrders');
-        if (adminTable === null) {
+        let userTable = document.getElementById('userEndOrders');
+        if (userTable === null) {
             return;
         } 
-        adminTable.innerHTML = '';
+        userTable.innerHTML = '';
+
+        let loggedInUser = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user'));
 
         allUsersData.forEach(user => {
-            if (user.orders) {
+            if (user.email === loggedInUser.email) {
                 let userCard = createCard(user, true);
-                adminTable.appendChild(userCard);
+                userTable.appendChild(userCard);
             }
 
         });
