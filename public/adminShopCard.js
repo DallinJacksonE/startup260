@@ -22,34 +22,32 @@ fetch('/api/getShopCards')
     });
 
 
-function deleteShopCard(shopCardsJson) {
+async function deleteShopCard() {
+
     let selector = document.querySelector('select');
     let selectedOption = selector.options[selector.selectedIndex];
-    let cardId = selectedOption.id;
+    let cardId = {cardID : selectedOption.id};
 
-    let cardToDelete = shopCardsJson.find(card => card['cardId'] === cardId);
-    let index = shopCardsJson.indexOf(cardToDelete);
-    shopCardsJson.splice(index, 1);
-
-    fetch('/api/updateShopCards', {
+    let response = fetch('/api/deleteShopCard', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(shopCardsJson)
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-            rebuildShopDeleteForm(shopCardsJson);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
+        body: JSON.stringify(cardId)
         });
+    let success = await response.json();
+
+    console.log('Deleted Shop Card: ', success);
 }
 
 
-function rebuildShopDeleteForm(shopCardsJson) {
+async function rebuildShopDeleteForm() {
+
+    let response = await fetch('/api/getShopCards');
+    let data = await response.json();
+    console.log('Got shop Cards to rebuild Delete Form: ', data);
+    let shopCardsJson = data;
+
     let container = document.getElementById('deleteSelector');
     container.innerHTML = '';
 
@@ -81,7 +79,7 @@ function rebuildShopDeleteForm(shopCardsJson) {
     button.textContent = 'Delete Shop Card'
     button.type = 'button'
     button.style.margin = '.5em';
-    button.onclick = () => deleteShopCard(shopCardsJson);
+    button.onclick = () => deleteShopCard();
     container.appendChild(button);
 }
 
@@ -110,32 +108,20 @@ function rebuildShopDeleteForm(shopCardsJson) {
                 </div>
             </form> */}
 
-function buildShopCardForm(shopCardsJson) {
+function buildShopCardForm() {
     let container = document.getElementById('newShopCardForm');
     container.style.padding = '1em';
     container.innerHTML = '';
 
     let form = document.createElement('form');
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        addShopCard();
+    });
+
     let header = document.createElement('h4');
     header.textContent = 'Upload a New Item to Shop';
     form.appendChild(header);
-
-    let div1 = document.createElement('div');
-    div1.className = 'mb-3';
-    form.appendChild(div1);
-
-    let label = document.createElement('label');
-    label.className = 'form-label';
-    label.textContent = 'Admin Password';
-    div1.appendChild(label);
-
-    let passwordInput = document.createElement('input');
-    passwordInput.className = 'form-control';
-    passwordInput.placeholder = 'Admin Password';
-    passwordInput.required = true;
-    passwordInput.type = 'password';
-    passwordInput.id = 'password';
-    div1.appendChild(passwordInput);
 
     let div2 = document.createElement('div');
     div2.className = 'mb-3';
@@ -204,6 +190,28 @@ function buildShopCardForm(shopCardsJson) {
     idInput.type = 'text';
     idInput.id = 'itemID';
     div5.appendChild(idInput);
+
+    let div7 = document.createElement('div');
+    div7.className = 'mb-3';
+    form.appendChild(div7);
+
+    let formcheckDiv = document.createElement('div');
+    formcheckDiv.className = 'form-check form-switch';
+    div7.appendChild(formcheckDiv);
+
+    let formcheckInput = document.createElement('input');
+    formcheckInput.className = 'form-check-input';
+    formcheckInput.type = 'checkbox';
+    formcheckInput.role = 'switch';
+    formcheckInput.id = 'flexSwitchCheckDefault';
+    formcheckDiv.appendChild(formcheckInput);
+
+    let formcheckLabel = document.createElement('label');
+    formcheckLabel.className = 'form-check-label';
+    formcheckLabel.htmlFor = 'flexSwitchCheckDefault';
+    formcheckLabel.textContent = 'Ready to Ship';
+    formcheckDiv.appendChild(formcheckLabel);
+    
     
     let div6 = document.createElement('div');
     div6.className = 'mb-3';
@@ -214,72 +222,83 @@ function buildShopCardForm(shopCardsJson) {
     pictureLabel.textContent = 'Picture';
     div6.appendChild(pictureLabel);
 
+
     let pictureInput = document.createElement('input');
     pictureInput.className = 'form-control';
     pictureInput.placeholder = 'Picture';
     pictureInput.required = true;
     pictureInput.type = 'file';
-    pictureInput.name = 'pictureFIle';
+    pictureInput.name = 'picture';
+    pictureInput.accept = '.png, .jpg, .jpeg';
     pictureInput.id = 'pictureFile';
     div6.appendChild(pictureInput);
 
     let button = document.createElement('button');
     button.className = 'btn btn-primary';
     button.textContent = 'Add Shop Card'
-    button.type = 'submit'
     button.style.margin = '.5em';
-    button.onclick = () => addShopCard(shopCardsJson);
     form.appendChild(button);
 
     container.appendChild(form);
 }
 
-/**
- * takes the inputs from the shop card form and adds a new shop card to the shopCardsJson
- * 
- * @param {*} shopCardsJson 
- */
-function addShopCard(shopCardsJson) {
+
+async function addShopCard() {
 
     //TODO: make sure that the picture is uploaded to the server and the path is stored in the shop card
 
-    let password = document.getElementById('password').value;
     let title = document.getElementById('title').value;
     let price = document.getElementById('price').value;
     let description = document.getElementById('exampleFormControlTextarea1').value;
     let itemID = document.getElementById('itemID').value;
-    let pictureFile = document.getElementById('pictureFile').value;
-
-    if (password !== 'Kronos') {
-        alert('Incorrect Password');
-        return;
-    }
+    let readyToShip = document.getElementById('flexSwitchCheckDefault').checked;
+    let pictureInput = document.getElementById('pictureFile');
+    let pictureFile = pictureInput.files[0];
+    let pictureFileName = pictureFile.name;
+    
 
     let newCard = {
         "cardId": itemID,
         "title": title,
         "price": price,
         "description": description,
-        "picture": pictureFile,
-        "stock": 1
+        "readyToShip": readyToShip,
+        "picture": "pics/creations/" + pictureFileName
     }
 
-    shopCardsJson.push(newCard);
+    console.log('New Shop Card: ', newCard);
 
-    fetch('/api/updateShopCards', {
+    //add shop card to database
+
+    let response = await fetch('/api/updateShopCards', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(shopCardsJson),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-            rebuildShopDeleteForm(shopCardsJson);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
+        body: JSON.stringify(newCard),
         });
+    
+    let data = await response.json();
+    console.log("New shop card data update call: ", data.success);
 
+
+    //add picture to server
+    let formData = new FormData();
+    formData.append('picture', pictureFile);
+    console.log('Form Data: ', formData);
+
+    let pictureResponse = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+    });
+
+    if (!pictureResponse.ok) {
+        console.error('Error during file upload:', await pictureResponse.text());
+    } else {
+        let pictureData = await pictureResponse.json();
+        console.log('Picture upload response: ', pictureData);
+    }
+
+    //rebuild the form
+    rebuildShopDeleteForm();
 }

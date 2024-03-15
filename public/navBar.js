@@ -22,7 +22,8 @@ function loadNavBar() {
         let brand = document.createElement("a");
         brand.className = "navbar-brand";
         brand.href = "index.html";
-        brand.style = "font-family: 'Goblin One', cursive; color: #1b4965; font-size: 1.5em;";
+        brand.style = "font-family: 'Goblin One', cursive; color: #1b4965;";
+        brand.style.fontSize = "1.2em";
         brand.textContent = "Kaylie's Creations";
 
         let button = document.createElement("button");
@@ -150,7 +151,8 @@ function loadNavBar() {
         let brand = document.createElement("a");
         brand.className = "navbar-brand";
         brand.href = "index.html";
-        brand.style = "font-family: 'Goblin One', cursive; color: #1b4965; font-size: 2em;";
+        brand.style = "font-family: 'Goblin One', cursive; color: #1b4965;";
+        brand.style.fontSize = "1.2em";
         brand.textContent = "Kaylie's Creations";
 
         let button = document.createElement("button");

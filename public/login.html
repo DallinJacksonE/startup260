@@ -17,7 +17,7 @@
        <div class="login-container">
         <div class="left-column" id="loginform">
           <main class="form-signin w-100 m-auto">
-            <form id="login-form">
+            <form id="login-form" action="javascript:login()">
               <h1 class="h3 mb-3 fw-normal">Sign in</h1>
               <div class="form-floating" id="signInEmailContainer">
                 <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com" required>
@@ -34,7 +34,7 @@
                   Remember me
                 </label>
               </div>
-              <button class="btn btn-primary w-100 py-2" type="submit" onclick="login()">Sign in</button>
+              <button class="btn btn-primary w-100 py-2" >Sign in</button>
               
             </form>
           </main>
@@ -45,7 +45,7 @@
             <div class="right-column" id="loginform">
               <main class="form-signin w-100 m-auto">
 
-                <form id="create-account">
+                <form id="create-account" action="javascript:createAccount()">
                     <h1 class="h3 mb-3 fw-normal">Make an account</h1>
                     <div class="form-floating">
                       
@@ -166,7 +166,7 @@
                     </div>
 
                     <div class="col-12">
-                      <button type="submit" class="btn btn-primary w-100 py-2" onclick="createAccount()">Sign up</button>
+                      <button class="btn btn-primary w-100 py-2">Sign up</button>
                     </div>
                     <div style="height: 4em"></div>
 

@@ -1,1 +1,12 @@
-[{"firstName":"Kaylie","lastName":"Jackson","password":"Kronos","email":"kaylie.beth.jackson@gmail.com","isAdmin":true,"lastLogin":"timeStampHere","isActive":false,"isOnline":false}]
+[
+    {
+        "firstName": "Kaylie",
+        "lastName": "Jackson",
+        "password": "Kronos",
+        "email": "kayliescreations30@gmail.com",
+        "isAdmin": true,
+        "lastLogin": "timeStampHere",
+        "isActive": false,
+        "isOnline": false
+    }
+]

@@ -22,6 +22,7 @@ async function login() {
         });
 
         const user = await response.json();
+        console.log("User: ", user);
         
         if (user.error) {
             console.log(user.error);

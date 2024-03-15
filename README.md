@@ -88,11 +88,11 @@ CSS implemented the following:
 
 **Note for TA's**
 I have a test account for you guys you can use, or you can make an account to test out the user features of adding from the shop to the orders cart and chatting.
-email: csTA@fake.edu
+email: <csTA@fake.edu>
 password: Apollo
 
 To see the Admin page where my sister will be adding to the shop and chatting with the users, log in with:
-email: kaylie.beth.jackson@gmail.com
+email: <kaylie.beth.jackson@gmail.com>
 password: Kronos
 
 ### TO DO

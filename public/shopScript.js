@@ -69,11 +69,11 @@ async function loadShop() {
 
             let cardStockText = document.createElement('h6');
             cardStockText.className = 'card-stock';
-            if (card.stock < 1) {
-                cardStockText.textContent = `Out of Stock`;
-                cardStockText.style = 'color: orange;';
+            if (card.readyToShip === false) {
+                cardStockText.textContent = `Made to Order`;
+                cardStockText.style = 'color: grey;';
             } else {
-                cardStockText.textContent = `Stock: ${card.stock}`;
+                cardStockText.textContent = ``;
                 cardStockText.style = 'color: green;';
             }
             
