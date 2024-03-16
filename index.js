@@ -1,7 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const app = express();
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 const multer = require('multer');
 
 // The service port. In production the front-end code is statically hosted by the service on the same port.
@@ -119,6 +119,7 @@ async function updateDocument(collection, filter, updatedDocument, type) {
     const result = await collection.updateOne({ email: filter }, { $set: updatedDocument });
     console.log(`${result.email} updated successfully`)
   } else if (type === 'shopCardDoc') {
+
     const result = await collection.updateOne({ uniqueId: filter }, { $set: updatedDocument });
     console.log(`${result.uniqueId} updated successfully`)
   } else {
@@ -193,29 +194,35 @@ apiRouter.post('/updateShopCards', async (req, res) => {
   res.send(shopCardData);
 });
 
-apiRouter.post('/deleteShopCard', (req, res) => {
+apiRouter.post('/deleteShopCard', async (req, res) => {
   console.log('Request body: ', req.body);
-  let shopCardData = deleteShopCard(req.body);
+  let shopCardData = await deleteShopCard(req.body);
   console.log('Shop Cards for (deleteShopCard) call: ', shopCardData);
   res.send(shopCardData);
 });
 
 // Send the user data (without passwords) to the front-end
-apiRouter.get('/safeUserData', (_req, res) => {
-  let userData = safeUserData();
+apiRouter.get('/safeUserData', async (_req, res) => {
+  let userData = await safeUserData();
   res.send(userData);
 });
 
 // Update the user data
-apiRouter.post('/updateUserData', (req, res) => {
-  let successBool = updateUserData(req.body);
-  res.send(successBool);
+apiRouter.post('/updateUserData', async (req, res) => {
+
+  console.log('Request body: ', req.body);
+  let updateData = req.body;
+  delete updateData._id;
+  (await users.updateOne({email: updateData.email}, {$set: updateData}));
+  
+  res.send({success: true});
 });
 
 //Delete a user
-apiRouter.post('/deleteUser', (req, res) => {
-  let successBool = deleteUser(req.body);
-  res.send(successBool);
+apiRouter.post('/deleteUser', async (req, res) => {
+  (await users.deleteOne({email: req.body.email}))
+  console.log('Deleted user: ', req.body.email);
+  res.send({success: true});
 });
 
 // Return the application's default page if the path is unknown
@@ -253,8 +260,25 @@ async function updateShopCards(newCardData = null) {
 }
 
 async function deleteShopCard(cardID) {
-  const result = await shopCards.deleteOne({uniqueId: cardID.cardID});
-  console.log(`Deleted shop card with the following id: ${result.deletedId}`);
+  // Get the card data from the database
+  let cardData = await shopCards.findOne({cardId: cardID.cardID});
+  console.log('Card data to be deleted: ', cardData);
+  if (cardData && cardData.picture) {
+    let picturePath = "public/" + cardData.picture;
+    console.log('Picture path to be deleted: ', picturePath);
+    //delete the picture
+    fs.unlink(picturePath, (err) => {
+      if (err) {
+        console.error('Error deleting picture: ', err);
+      } else {
+        console.log('File Removed: ', picturePath);
+      }
+    });
+
+    const result = await shopCards.deleteOne({cardId: cardID.cardID});
+    console.log(`Deleted shop card with the following id: ${cardID.cardID}`);
+  }
+
   return {success: true};
 }
 
@@ -316,50 +340,12 @@ async function addUser(newUserInfo) {
   return returnData;
 }
 
-function safeUserData() {
-  let userData = JSON.parse(fs.readFileSync('users.json'));
-  for (let i = 1; i < userData.length; i++) {
-    delete userData[i].password;
+async function safeUserData() {
+  let userData = users.find();
+  let userDataArray = await userData.toArray();
+
+  for (let i = 1; i < userDataArray.length; i++) {
+    delete userDataArray[i].password;
   }
-  return userData;
-}
-
-function updateUserData(updatedUserData) {
-  
-  let userData = JSON.parse(fs.readFileSync('users.json'));
-  let successBool = false;
-
-  for (let i = 0; i < userData.length; i++) {
-    if (userData[i].email === updatedUserData.email) {
-      updatedUserData.password = userData[i].password;
-      userData[i] = updatedUserData;
-      successBool = true;
-      break;
-    }
-  }
-
-  if (successBool) {
-    fs.writeFileSync('users.json', JSON.stringify(userData));
-  }
-  return {success: successBool};
-}
-
-function deleteUser(userEmail) {
-
-  let userData = JSON.parse(fs.readFileSync('users.json'));
-  let successBool = false;
-
-  for (let i = 1; i < userData.length; i++) {
-    if (userData[i].email === userEmail.userEmail) {
-      userData.splice(i, 1);
-      successBool = true;
-      break;
-    }
-  }
-
-  if (successBool) {
-    fs.writeFileSync('users.json', JSON.stringify(userData));
-  } 
-
-  return {success: successBool};
+  return userDataArray;
 }

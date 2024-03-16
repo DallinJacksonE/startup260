@@ -134,7 +134,7 @@ async function displayCart() {
                     colDiv.className = 'col-xxl-4';
 
                     let img = document.createElement('img');
-                    img.src = user.orders[i].card.picturePath;
+                    img.src = user.orders[i].card.picture;
                     img.alt = user.orders[i].card.title;
                     //img.style.minWidth = '195px'; 
                     img.className = 'img-fluid rounded-start mx-auto';
@@ -191,7 +191,7 @@ async function displayCart() {
 
             if (trueCount === user.orders.length) {
                 let emptyCart = document.createElement('h5');
-                emptyCart.textContent = 'Your cart is empty, add some items to it in the Shop!';
+                emptyCart.textContent = 'Your cart is empty, go to your account page to view your orders or add some items to the cart in the Shop!';
                 cartContainer.appendChild(emptyCart);
             } else {
                 let dividerLine = document.createElement('hr');

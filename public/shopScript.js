@@ -18,7 +18,7 @@ class shopCard {
         this.description = cardData.description;
         this.price = cardData.price;
         this.cardId = cardData.cardId;
-        this.picturePath = cardData.picturePath
+        this.picture = cardData.picture
         this.stock = cardData.stock;
         
     }
@@ -34,7 +34,7 @@ async function loadShop() {
     console.log("Response: ", response);
     const shopCardsJson = await response.json();
 
-    console.log("Got Shop cards: ", shopCardsJson);
+    //console.log("Got Shop cards: ", shopCardsJson);
 
 
     let kayliesShop = new shop(shopCardsJson);
@@ -50,13 +50,16 @@ async function loadShop() {
             // Create elements for the card's title, description, and price
             let colClassDiv = document.createElement('div');
             colClassDiv.className = 'col';
+
+            //console.log("Card: ", card);
     
             //makes card class div where data is stored
             let cardClassDiv = document.createElement('div');
             cardClassDiv.className = 'card';
     
             let img = document.createElement('img');
-            img.src = card.picturePath;
+            img.src = card.picture;
+            console.log("Card Picture: ", card.picture);
             img.alt = card.title;
             img.className = 'card-img-top';
     
@@ -69,11 +72,12 @@ async function loadShop() {
 
             let cardStockText = document.createElement('h6');
             cardStockText.className = 'card-stock';
+
             if (card.readyToShip === false) {
                 cardStockText.textContent = `Made to Order`;
                 cardStockText.style = 'color: grey;';
             } else {
-                cardStockText.textContent = ``;
+                cardStockText.textContent = `Ready to Ship`;
                 cardStockText.style = 'color: green;';
             }
             
@@ -114,7 +118,7 @@ async function loadShop() {
             cardClassDiv.className = 'card';
     
             let img = document.createElement('img');
-            img.src = card.picturePath;
+            img.src = card.picture;
             img.alt = card.title;
             img.className = 'card-img-top';
     

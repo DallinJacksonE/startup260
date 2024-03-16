@@ -28,7 +28,7 @@ async function deleteShopCard() {
     let selectedOption = selector.options[selector.selectedIndex];
     let cardId = {cardID : selectedOption.id};
 
-    let response = fetch('/api/deleteShopCard', {
+    let response = await fetch('/api/deleteShopCard', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -38,6 +38,7 @@ async function deleteShopCard() {
     let success = await response.json();
 
     console.log('Deleted Shop Card: ', success);
+    rebuildShopDeleteForm();
 }
 
 
@@ -219,7 +220,13 @@ function buildShopCardForm() {
 
     let pictureLabel = document.createElement('label');
     pictureLabel.className = 'form-label';
-    pictureLabel.textContent = 'Picture';
+    pictureLabel.textContent = 'Picture (No files greater than 600KB, pictures must be cropped in a 3:4 ratio) ';
+    let compressionLink = document.createElement('a');
+    compressionLink.href = 'https://imagecompressor.com/';
+    compressionLink.textContent = 'Compress Image here (down to 45% of original size)';
+
+    pictureLabel.appendChild(compressionLink);
+
     div6.appendChild(pictureLabel);
 
 

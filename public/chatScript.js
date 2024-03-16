@@ -197,8 +197,12 @@ async function chatSelector() {
         colDiv.className = "col";
 
         let button = document.createElement("button");
-        if (userData[i]["chatData"][userData[i]["chatData"].length-1]["sender"] !== "Kaylie Jackson") {
-            button.className = "btn btn-outline-warning";
+        button.type = "button";
+
+        if (userData[i]["chatData"].length === 0) {
+            button.className = "btn btn-info";
+        } else if (userData[i]["chatData"][userData[i]["chatData"].length-1]["sender"] !== "Kaylie Jackson") {
+            button.className = "btn btn-warning";
         } else {
             button.className = "btn btn-primary";
         }
