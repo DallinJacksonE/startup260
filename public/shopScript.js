@@ -20,6 +20,7 @@ class shopCard {
         this.cardId = cardData.cardId;
         this.picture = cardData.picture
         this.stock = cardData.stock;
+        this.readyToShip = cardData.readyToShip;
         
     }
 
@@ -46,7 +47,7 @@ async function loadShop() {
         
     if (user) {
         cards.forEach(card => {
-        
+            
             // Create elements for the card's title, description, and price
             let colClassDiv = document.createElement('div');
             colClassDiv.className = 'col';
@@ -72,11 +73,11 @@ async function loadShop() {
 
             let cardStockText = document.createElement('h6');
             cardStockText.className = 'card-stock';
-
+            console.log("Card ready to ship: ", card.readyToShip);
             if (card.readyToShip === false) {
                 cardStockText.textContent = `Made to Order`;
                 cardStockText.style = 'color: grey;';
-            } else {
+            } else if (card.readyToShip === true) {
                 cardStockText.textContent = `Ready to Ship`;
                 cardStockText.style = 'color: green;';
             }
