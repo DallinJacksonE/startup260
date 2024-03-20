@@ -162,9 +162,10 @@ apiRouter.post('/upload', upload.single('picture'), (req, res, next) => {
 
 
 // Create a new user
-apiRouter.post('/createAccount', (req, res) => {
-  let successBool = addUser(req.body);
-  res.send(successBool);
+apiRouter.post('/createAccount', async (req, res) => {
+  let reply = await addUser(req.body);
+  console.log('New account call result: ', reply);
+  res.send(reply);
 });
 
 // Authenticate a login attempt
@@ -324,7 +325,7 @@ async function addUser(newUserInfo) {
   let existingUsers = await response.toArray();
 
   // Check if the email is already in use
-  for (let i = 0; i < users.length; i++) {
+  for (let i = 0; i < existingUsers.length; i++) {
     if (existingUsers[i].email === newUserInfo.email) {
       valid = false;
       break;

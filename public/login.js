@@ -72,7 +72,7 @@ function displayError(form, idList) {
 }
 
 
-function createAccount() {
+async function createAccount() {
     let createAccount = document.getElementById("create-account");
     let firstName = createAccount["firstName"].value;
     let lastName = createAccount["lastName"].value;
@@ -115,26 +115,50 @@ function createAccount() {
         }
         newUser.chatData.push({ "sender": "Kaylie Jackson", "message": "Welcome to my website!", "timeStamp": "Kaylie Jackson" + ': ' + timeStamp });
         console.log("New User: ", newUser);
-        localStorage.setItem("newUser", JSON.stringify(newUser));
-        fetch('/api/createAccount', {
+        
+        let newUserCall = await fetch('/api/createAccount', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(newUser)
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                console.log(data.error);
-            } else {
-                console.log('Success:', data);
-                localStorage.setItem("user", JSON.stringify(data));
-                window.location.href = "index.html";
-            }
-        });
         
+        let response = await newUserCall.json();
+        console.log("New User call response: ", response);
+
+        if (response.error) {
+            console.log(response.error);
+            document.getElementById("create-account").reset();
+            
+            let email = document.getElementById("floatingCreateInput");
+            email.className = "form-control is-invalid";
+
+
+
+        } else {
+            let user = response;
+            sessionStorage.setItem("user", JSON.stringify(user));
+            let firstNameEntry = document.getElementById("inputFirstName");
+            let lastNameEntry = document.getElementById("inputLastName");
+            let emailEntry = document.getElementById("floatingCreateInput");
+
+            let consentEntry = document.getElementById("gridCheck");
+
+            firstNameEntry.className = "form-control is-valid";
+            lastNameEntry.className = "form-control is-valid";
+            emailEntry.className = "form-control is-valid";
+            consentEntry.className = "form-check-input is-valid";
+
+            await sleep(1500);
+
+            window.location.href = "index.html";
+        }
 
     }
     
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
