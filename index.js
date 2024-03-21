@@ -113,24 +113,12 @@ async function createDocument(collection, document) {
   return result;
 }
 
-async function updateDocument(collection, filter, updatedDocument, type) {
-  //filter is email for users, uniqueId for shopCards
-  if (type === 'userDoc') {
-    const result = await collection.updateOne({ email: filter }, { $set: updatedDocument });
-    console.log(`${result.email} updated successfully`)
-  } else if (type === 'shopCardDoc') {
-
-    const result = await collection.updateOne({ uniqueId: filter }, { $set: updatedDocument });
-    console.log(`${result.uniqueId} updated successfully`)
-  } else {
-    console.log('Invalid type');
-  }
-}
-
 
 ///
 /// Upload shop pictures
 /// 
+
+
 const upload = multer({
   storage: multer.diskStorage({
     destination: 'public/pics/creations/',
