@@ -86,20 +86,41 @@ CSS implemented the following:
 - [x] Have the frontend call the instagram API to get Kaylie's instagram gallery
 - [x] Have the orders work
 
-**Note for TA's**
-I have a test account for you guys you can use, or you can make an account to test out the user features of adding from the shop to the orders cart and chatting.
+## Note for TAs
+
+I have a test account for you guys you can use, or you can make an account to test out the admin features of adding from the shop to the orders cart and chatting.
 email: <csTA@fake.edu>
 password: Apollo
 
-To see the Admin page where my sister will be adding to the shop and chatting with the users, log in with:
-email: <kaylie.beth.jackson@gmail.com>
-password: Kronos
+You have admin access to the admin page, so your personal chat with the admin won't work. To see the user experience, you can make an account or log in with
+email: <newFakeEmail@test.com>
+password: fake
+
+### ✅ Login Deliverable
+
+- [x] User can make and delete a personal account
+- [x] Admin can see all user information
+- [x] On login, the user is given a unique cookie ID to be able to access:
+      - the navbar with shopping functionality
+      - an account page to see orders and order status
+      - the shop, not the gallery
+      - a chat with Kaylie
+- [x] Admin capacity includes
+      - creating new shop cards
+      - deleting shop cards
+      - uploading picture files to the server
+      - seeing all user orders
+      - update the status of user orders
+      - a chat with each user
+- [x] index.js is modularized into a index.js and database.js
+- [x] all data is stored in mongoDB (excet for shopcard photos)
+- [x] apis rewritten to use more secure practices
 
 ### TO DO
 
-- [ ] Have error messages display when the login is incorrect
+- [x] Have error messages display when the login is incorrect
 - [ ] Have a feedback response for when something is added to the cart from the shop
 - [x] kaylie needs a table of placed orders
 - [x] user page with submitted orders, ability to delete orders, change address, or delete account
-- [ ] PayPal integration
-- [ ] shop card picture file submission
+- [ ] Square pay integration
+- [x] shop card picture file submission
