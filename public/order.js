@@ -7,10 +7,8 @@ let loggedInUser = JSON.parse(localStorage.getItem("user") || sessionStorage.get
 async function removeFromCart(itemUniqueCode, clear = false) {
     try {
 
-        const response = await fetch('/api/safeUserData');
-        const userData = await response.json();
-
-        let user = userData.find(user => user.email === loggedInUser.email);
+        const response = await fetch('/api/secureUser');
+        const user = await response.json();
 
         if (clear) {
             for (let i = 0; i < user.orders.length; i++) {
@@ -29,17 +27,18 @@ async function removeFromCart(itemUniqueCode, clear = false) {
         }
 
         let jsonData = JSON.stringify(user);
-        let response2 = await fetch('/api/updateUserData', {
+        let response2 = await fetch('/api/updateUserOrders', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: jsonData,
         });
-        let data = await response2.json();
-        console.log("Cart data update call: ", data.success);
+        
+        console.log("Cart data update call: ", response2.status);
 
         displayCart();
+
     } catch (error) {
         console.error('Error:', error);
     }
@@ -48,9 +47,9 @@ async function removeFromCart(itemUniqueCode, clear = false) {
 async function submitCart() {
 
     try {
-        let response = await fetch('/api/safeUserData');
-        let userData = await response.json();
-        let user = userData.find(user => user.email === loggedInUser.email);
+        let response = await fetch('/api/secureUser');
+        const user = await response.json();
+        
 
         let currentDate = new Date();
         let dueDate = new Date();
@@ -68,6 +67,7 @@ async function submitCart() {
                 user.orders[i].dateDue = dueDateString;
                 user.orders[i].shipped = false;
                 user.orders[i].complete = false;
+                user.orders[i].comments = '';
 
                 //get comments from the text area
                 let commentsElement = document.getElementById(user.orders[i].uniqueId);
@@ -77,15 +77,14 @@ async function submitCart() {
         }
 
         let jsonData = JSON.stringify(user);
-        let response2 = await fetch('/api/updateUserData', {
+        let response2 = await fetch('/api/updateUserOrders', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: jsonData,
         });
-        let data = await response2.json();
-        console.log("Cart submitted data update call: ", data.success);
+        console.log("Cart submitted data update call: ", response2.status);
         
         displayCart();
 
@@ -100,10 +99,10 @@ async function submitCart() {
 async function displayCart() {
     try {
 
-        const response = await fetch('/api/safeUserData');
+        const response = await fetch('/api/secureUser');
         const userData = await response.json();
 
-        let user = userData.find(user => user.email === loggedInUser.email);
+        let user = userData;
 
         let ticketForm = document.getElementById('ticketForm');
         ticketForm.innerHTML = '';
@@ -119,7 +118,6 @@ async function displayCart() {
     
         ticketForm.appendChild(cartContainer);
 
-        console.log(user);
         console.log(user.orders);
         if (user.orders.length > 0) {
             let trueCount = 0;

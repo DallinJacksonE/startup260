@@ -35,9 +35,8 @@ async function deleteShopCard() {
         },
         body: JSON.stringify(cardId)
         });
-    let success = await response.json();
 
-    console.log('Deleted Shop Card: ', success);
+    console.log('Deleted Shop Card: ', response.status);
     rebuildShopDeleteForm();
 }
 
@@ -277,7 +276,7 @@ async function addShopCard() {
 
     //add shop card to database
 
-    let response = await fetch('/api/updateShopCards', {
+    let response = await fetch('/api/createShopCard', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -285,8 +284,8 @@ async function addShopCard() {
         body: JSON.stringify(newCard),
         });
     
-    let data = await response.json();
-    console.log("New shop card data update call: ", data.success);
+    
+    console.log("New shop card data update call: ", response.status);
 
 
     //add picture to server
@@ -308,4 +307,5 @@ async function addShopCard() {
 
     //rebuild the form
     rebuildShopDeleteForm();
+    buildShopCardForm();
 }

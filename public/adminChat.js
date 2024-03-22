@@ -1,11 +1,58 @@
-//Dallin Jackson 2/14/24
-//kayliescreations.biz
+async function chatSelector() {
 
-async function displayChat() {
+    let userData;
 
-    
-    const response = await fetch('/api/secureUser');
-    const customer = await response.json(); 
+    try {
+
+        userData = await fetch('/api/adminAccess')
+            .then(response => response.json())
+            .then(data => {
+                return data;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+        let chatBox = document.getElementById("chatbox");
+        chatBox.innerHTML = '';
+        let containerDiv = document.createElement("div");
+        containerDiv.className = "container text-center";
+        let rowDiv = document.createElement("div");
+        rowDiv.className = "row row-cols-1 row-cols-sm-2 row-cols-md-4";
+
+        for (let i = 1; i < userData.length; i++) {
+            let colDiv = document.createElement("div");
+            colDiv.className = "col";
+
+            let button = document.createElement("button");
+            button.type = "button";
+
+            if (userData[i]["chatData"].length === 0) {
+                button.className = "btn btn-info";
+            } else if (userData[i]["chatData"][userData[i]["chatData"].length-1]["sender"] !== "Kaylie Jackson") {
+                button.className = "btn btn-warning";
+            } else {
+                button.className = "btn btn-primary";
+            }
+            
+            button.textContent = userData[i]["firstName"] + " " + userData[i]["lastName"];
+            button.onclick = function() {
+                displayChat(userData[i]);
+            }
+            colDiv.appendChild(button);
+            rowDiv.appendChild(colDiv);
+            containerDiv.appendChild(rowDiv);
+            chatBox.prepend(containerDiv);
+        }
+
+    } catch (error) {
+
+        console.error('Error:', error);
+    }
+}
+
+async function displayChat(customer) {
+
     
     let userChatData = customer.chatData;
     
@@ -52,7 +99,7 @@ async function displayChat() {
     let messageInput = document.createElement("div");
     messageInput.className = "messageInput";
     let img = document.createElement("img");
-    img.src = "greylogo.png";
+    img.src = "apple-touch-icon.png";
     
     img.alt = "Avatar";
     img.className = "right";
@@ -104,11 +151,8 @@ function scrollToBottom() {
     
 }
 
-async function sendMessage() {
+async function sendMessage(customer) {
 
-    const responseGettingUser = await fetch('/api/secureUser');
-    const customer = await responseGettingUser.json();
-    
     let userChatData = customer.chatData;
     let inputGroup = document.getElementById("input-group");
     let message = inputGroup["messageText"].value;
@@ -121,7 +165,7 @@ async function sendMessage() {
     let timeStampString = timeStampHours + ":" + timeStampMinutes;
     let timeStamp = timeStampString;
 
-    let sentBy = customer["firstName"] + " " + customer["lastName"];
+    let sentBy = "Kaylie Jackson";
 
     userChatData.push({ "sender": sentBy, "message": message, "timeStamp": sentBy + ': ' + timeStamp });
     
@@ -139,5 +183,5 @@ async function sendMessage() {
     } else {
         console.log("Message not sent");
     }
-    displayChat();
+    displayChat(customer);
 }

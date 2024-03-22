@@ -2,17 +2,18 @@
 // kayliescreations.biz
 
 /**
- * if user is defined in local storage, then the navbar has the shop and ticket links, and the login link is removed
- * if user is not defined in local storage, then the navbar has the login link, and the shop is replaced with a gallery page that
+ * if user is logged in, then the navbar has the shop and ticket links, and the login link is removed
+ * if user is not, then the navbar has the login link, and the shop is replaced with a gallery page that
  * generates the shop cards without the buy button.
  */
 
-function loadNavBar() {
-    let user = JSON.parse(localStorage.getItem("user")) || JSON.parse(sessionStorage.getItem("user"));
+async function loadNavBar() {
+    
+    const response = await fetch('/api/validate');
 
     let header = document.getElementsByTagName("header");
-    // If the user is logged in (defined in local storage or session storage)
-    if (user) {
+    // If the user is logged in (status code 204)
+    if (response.status === 204) {
         let navBar = document.createElement("nav");
         navBar.className = "navbar sticky-top navbar-expand-xl navbar-light bg-light ";
 
@@ -102,7 +103,11 @@ function loadNavBar() {
 
         let admin = document.createElement("li");
         let adminLink = document.createElement("a");
-        if (user["isAdmin"]) {
+
+        const response = await fetch(`/api/secureUser`);
+        const user = await response.json();
+
+        if (user.isAdmin) {
             admin.className = "nav-item";
             adminLink.className = "nav-link";
             adminLink.href = "kayliesPage.html";
@@ -141,7 +146,8 @@ function loadNavBar() {
             }
         }
 
-    } else {
+    } else { // If the user is not logged in
+
         let navBar = document.createElement("nav");
         navBar.className = "navbar sticky-top navbar-expand-lg navbar-light bg-light ";
 

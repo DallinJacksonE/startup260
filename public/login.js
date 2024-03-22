@@ -12,64 +12,39 @@ async function login() {
     let rememberMe = signIn["remember-me"].checked
     let userLogin = {email: email, password: password}
 
-    try {
-        const response = await fetch('/api/authenticate', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userLogin)
-        });
-
-        const user = await response.json();
-        console.log("User: ", user);
-        
-        if (user.error) {
-            console.log(user.error);
-            signIn["email"].value = "";
-            signIn["password"].value = "";
-            signIn["remember-me"].checked = false;
-
-            displayError(signIn, ["floatingInput", "floatingPassword"]);
-
-        } else if (rememberMe === true) {
-            console.log("User logged in with remember me");
-            localStorage.setItem("user", JSON.stringify(user));
-            window.location.href = "index.html";
-        } else {
-            console.log("User logged in without remember me");
-            sessionStorage.setItem("user", JSON.stringify(user));
-            window.location.href = "index.html";
-        }
-    } catch (error) {
-        console.error('Error:', error);
-    }
+    const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userLogin)
+    });
     
+    if (response.ok ) {
+        if (rememberMe === true) {
+            localStorage.setItem('userEmail', email);
+        } else {
+            sessionStorage.setItem('userEmail', email);
+        }
+        window.location.href = 'index.html';
+    } else {
+    signIn.reset();
+    signIn["email"].className = "form-control is-invalid";
+    signIn["password"].className = "form-control is-invalid";
+    }
     
 }
 
 function logout() {
     localStorage.clear();
     sessionStorage.clear();
-    window.location.href = "index.html";
-}
+    fetch(`/api/auth/logout`, {
+      method: 'delete',
+    }).then(() => (window.location.href = '/'));
 
-function displayError(form, idList) {
-    console.log(idList);
-    let email = document.getElementById(idList[0]);
-    if (idList.length > 1) {
-        let password = document.getElementById(idList[1]);
-        password.className = "form-control is-invalid";
-    }
-    
-    console.log(email);
-    
-    email.className = "form-control is-invalid";
-    
-    console.log(email);
-    
-    console.log("displayError: ", true);
-}
+    window.location.href = "index.html";
+  }
+
 
 
 async function createAccount() {
@@ -107,16 +82,14 @@ async function createAccount() {
                 state: state,
                 zip: zip,
             },
-            isAdmin: false,
             chatData: [],
-            orders: [],
-            emailWhenStatusUpdate: false
+            orders: []
             
         }
         newUser.chatData.push({ "sender": "Kaylie Jackson", "message": "Welcome to my website!", "timeStamp": "Kaylie Jackson" + ': ' + timeStamp });
         console.log("New User: ", newUser);
         
-        let newUserCall = await fetch('/api/createAccount', {
+        let newUserCall = await fetch('/api/auth/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -138,7 +111,7 @@ async function createAccount() {
 
         } else {
             let user = response;
-            sessionStorage.setItem("user", JSON.stringify(user));
+            sessionStorage.setItem("userEmail", JSON.stringify(user.email));
             let firstNameEntry = document.getElementById("inputFirstName");
             let lastNameEntry = document.getElementById("inputLastName");
             let emailEntry = document.getElementById("floatingCreateInput");

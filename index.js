@@ -1,124 +1,216 @@
+const cookieParser = require('cookie-parser');
+const bcrypt = require('bcrypt');
 const express = require('express');
-const fs = require('fs');
 const app = express();
-const { MongoClient, ObjectId } = require('mongodb');
+const DB = require('./database.js');
 const multer = require('multer');
+const fs = require('fs');
 
-// The service port. In production the front-end code is statically hosted by the service on the same port.
+const authCookieName = 'token';
+
+// The service port may be set on the command line
 const port = process.argv.length > 2 ? process.argv[2] : 3000;
 
 // JSON body parsing using built-in middleware
 app.use(express.json());
 
-// Serve up the front-end static content hosting
+// Use the cookie parser middleware for tracking authentication tokens
+app.use(cookieParser());
+
+// Serve up the applications static content
 app.use(express.static('public'));
+
+// Trust headers that are forwarded from the proxy so we can determine IP addresses
+app.set('trust proxy', true);
 
 // Router for service endpoints
 var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
+// CreateAuth token for a new user
+apiRouter.post('/auth/create', async (req, res) => {
+  if (await DB.getUser(req.body.email)) {
+    res.status(409).send({ msg: 'Existing user' });
+  } else {
+    const user = await DB.createUser(req.body.email, req.body.password, req.body.firstName, req.body.lastName, req.body.address, req.body.chatData, req.body.orders);
 
-///
-/// MongoDB 
-///
+    // Set the cookie
+    setAuthCookie(res, user.token);
 
-//get keys
-const config = require('./dbConfig.json');
-const e = require('express');
-//build url
-const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
-//create client and db
-const client = new MongoClient(url);
-const db = client.db('kayliescreations');
-//create collections
-const shopCards = db.collection('shopCards');
-const users = db.collection('users');
-
-//check if connection can be established
-(async function testConnection() {
-  await client.connect();
-  await db.command({ ping: 1 });
-  console.log('Connected to database');
-
-})().catch((ex) => {
-  console.log(`Unable to connect to database with ${url} because ${ex.message}`);
-  process.exit(1);
-});
-
-//clean up user entries if version update requires more values in their object
-//get all users
-(async function cleanUpExistingUsers() {
-  const allUsers = users.find();
-  const userArray = await allUsers.toArray();
-  //loop through each user
-  userArray.forEach(user => {
-    //if user does not have a cart, add a cart
-    if (!user.cart && user.isAdmin === false) {
-      user.cart = [];
-      //update user entry
-      users.updateOne({email: user.email}, {$set: user});
-      console.log(`Updated user ${user.email}`);
-    }
-  
-    //
-  })
-})().catch((ex) => {
-  console.log(`Unable to clean up users because ${ex.message}`);
-});
-
-//if users collection is empty, add kaylie and me
-(async function addAdminUsers() {
-  const adminPasswords = require('./adminPasswords.json');
-  const allUsers = users.find();
-  const userArray = await allUsers.toArray();
-  if (userArray.length === 0) {
-    const kaylie = {
-      firstName: 'Kaylie',
-      lastName: 'Jackson',
-      email: 'kayliescreations30@gmail.com',
-      password: adminPasswords.kaylie,
-      isAdmin: true,
-      ordersShipped: 0
-    }
-    const dallin = {
-      firstName: 'Dallin',
-      lastName: 'Jackson',
-      email: 'dallin.e.jackson@gmail.com',
-      password: adminPasswords.dallin,
-      isAdmin: false,
-      address: {
-        addressLine1: '443 South State Street',
-        addressLine2: 'APT 208',
-        city: 'Provo',
-        state: 'UT',
-        zip: '84606'
-      },
-      orders : [],
-      chatData : []
-    }
-    const result = await client.db('kayliescreations').collection('users').insertMany([kaylie, dallin]);
-    console.log(`${result.insertedCount} new user(s) created with the following id(s):`);
-    console.log(result.insertedIds); 
+    res.send({
+      id: user._id,
+    });
   }
-
-})().catch((ex) => {
-  console.log(`Unable to add users because ${ex.message}`);
 });
 
-//functions to insert/edit/delete
+// GetAuth token for the provided credentials
+apiRouter.post('/auth/login', async (req, res) => {
+  const user = await DB.getUser(req.body.email);
+  if (user) {
+    if (await bcrypt.compare(req.body.password, user.password)) {
+      setAuthCookie(res, user.token);
+      res.send({ id: user._id });
+      return;
+    }
+  }
+  res.status(401).send({ msg: 'Unauthorized' });
+});
 
-async function createDocument(collection, document) {
-  const result = await collection.insertOne(document);
-  console.log(`New document created with the following id: ${result.insertedId}`);
-  return result;
+// DeleteAuth token if stored in cookie
+apiRouter.delete('/auth/logout', (_req, res) => {
+  res.clearCookie(authCookieName);
+  res.status(204).end();
+});
+
+// GetUser returns information about a user
+apiRouter.get('/user/:email', async (req, res) => {
+  const user = await DB.getUser(req.params.email);
+  if (user) {
+    const token = req?.cookies.token;
+    res.send({ email: user.email, authenticated: token === user.token });
+    return;
+  }
+  res.status(404).send({ msg: 'Unknown' });
+});
+
+// GetShopCards
+apiRouter.get('/getShopCards', async (req, res) => {
+  const cards = await DB.getShopCards();
+  res.send(cards);
+});
+
+// secureApiRouter verifies credentials for endpoints
+var secureApiRouter = express.Router();
+apiRouter.use(secureApiRouter);
+
+secureApiRouter.use(async (req, res, next) => {
+  authToken = req.cookies[authCookieName];
+  const user = await DB.getUserByToken(authToken);
+  if (user) {
+    next();
+  } else {
+    res.status(401).send({ msg: 'Unauthorized' });
+  }
+});
+
+
+// Create ShopCard
+secureApiRouter.post('/createShopCard', async (req, res) => {
+  const card = req.body;
+  if (card) {
+    await DB.addShopCard(card);
+    res.status(204).end();
+  } else {
+    res.status(401).send({ msg: 'Unauthorized' });
+  }
+});
+
+// Validate the user's token
+secureApiRouter.get('/validate', (_req, res) => {
+  res.status(204).end();
+});
+
+// Return user data
+secureApiRouter.get('/secureUser', async (req, res) => {
+  const user = await DB.getUserByToken(req.cookies[authCookieName]);
+  const { password, token, ...userWithoutSensitiveInfo } = user;
+  res.send(userWithoutSensitiveInfo);
+});
+
+// Update user order data
+secureApiRouter.post('/updateUserOrders', async (req, res) => {
+  const user = req.body;
+  if (user) {
+    await DB.updateUser(user);
+    res.status(204).end();
+  } else {
+    res.status(401).send({ msg: 'Unauthorized' });
+  }
+});
+
+// Update user chat data
+secureApiRouter.post('/updateUserChat', async (req, res) => {
+  const user = req.body;
+  if (user) {
+    await DB.updateUser(user);
+    res.status(204).end();
+  } else {
+    res.status(401).send({ msg: 'Unauthorized' });
+  }
+});
+
+//Admin access to all users
+secureApiRouter.get('/adminAccess', async (req, res) => {
+  const user = await DB.getUserByToken(req.cookies[authCookieName]);
+  if (user.isAdmin) {
+    const users = await DB.getUsers();
+    res.send(users);
+  } else {
+    res.status(401).send({ msg: 'Unauthorized' });
+  }
+});
+
+// Delete user account
+secureApiRouter.post('/deleteUser', async (req, res) => {
+  const user = await DB.getUserByToken(req.cookies[authCookieName]);
+  if (user) {
+    await DB.deleteUser(user);
+    res.status(204).end();
+  } else {
+    res.status(401).send({ msg: 'Unauthorized' });
+  }
+});
+
+// Delete shop card
+secureApiRouter.post('/deleteShopCard', async (req, res) => {
+  const card = req.body;
+  if (card) {
+    let cardData = await DB.getShopCard(card);
+    if (cardData) {
+      if (cardData.picture) {
+        fs.unlink(`public/${cardData.picture}`, (err) => {
+          if (err) {
+            console.error(err);
+            return;
+          }
+        });
+      }
+    }
+    await DB.removeShopCard(card);
+
+    res.status(204).end();
+  } else {
+    res.status(401).send({ msg: 'Unauthorized' });
+  }
+});
+
+// Default error handler
+app.use(function (err, req, res, next) {
+  res.status(500).send({ type: err.name, message: err.message });
+});
+
+// Return the application's default page if the path is unknown
+app.use((_req, res) => {
+  res.sendFile('index.html', { root: 'public' });
+});
+
+// setAuthCookie in the HTTP response
+function setAuthCookie(res, authToken) {
+  res.cookie(authCookieName, authToken, {
+    secure: true,
+    httpOnly: true,
+    sameSite: 'strict',
+  });
 }
+
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
+});
 
 
 ///
 /// Upload shop pictures
 /// 
-
-
 const upload = multer({
   storage: multer.diskStorage({
     destination: 'public/pics/creations/',
@@ -129,7 +221,7 @@ const upload = multer({
   limits: { fileSize: 600 * 1024 }, // 600 KB
 });
 
-apiRouter.post('/upload', upload.single('picture'), (req, res, next) => {
+secureApiRouter.post('/upload', upload.single('picture'), (req, res, next) => {
   if (req.file) {
     res.send({
       message: 'Uploaded succeeded',
@@ -143,198 +235,3 @@ apiRouter.post('/upload', upload.single('picture'), (req, res, next) => {
   console.error('Error during file upload:', err);
   res.status(500).send({ message: 'Internal Server Error' });
 });
-
-///
-/// Endpoints
-///
-
-
-// Create a new user
-apiRouter.post('/createAccount', async (req, res) => {
-  let reply = await addUser(req.body);
-  console.log('New account call result: ', reply);
-  res.send(reply);
-});
-
-// Authenticate a login attempt
-apiRouter.post('/authenticate', async (req, res) => {
-  try {
-    const loginRequest = await authenticateUser(req.body);
-    console.log('Login request: ', loginRequest);
-    res.send(loginRequest );
-  } catch (error) {
-    console.error('Error during authentication: ', error);
-    res.send({ error: 'Failed to authenticate user' });
-  }
-});
-
-// Serve up the shop cards
-apiRouter.get('/getShopCards', async (_req, res) => {
-  let shopCardData = await updateShopCards();
-  console.log('Shop Cards for (getShopChards) call: ', shopCardData);
-  res.send(shopCardData);
-});
-
-// Update the shop cards
-apiRouter.post('/updateShopCards', async (req, res) => {
-  console.log('Request body: ', req.body);
-  let shopCardData = await updateShopCards(req.body);
-  console.log('Shop Cards for (updateShopCards) call: ', shopCardData);
-  res.send(shopCardData);
-});
-
-apiRouter.post('/deleteShopCard', async (req, res) => {
-  console.log('Request body: ', req.body);
-  let shopCardData = await deleteShopCard(req.body);
-  console.log('Shop Cards for (deleteShopCard) call: ', shopCardData);
-  res.send(shopCardData);
-});
-
-// Send the user data (without passwords) to the front-end
-apiRouter.get('/safeUserData', async (_req, res) => {
-  let userData = await safeUserData();
-  res.send(userData);
-});
-
-// Update the user data
-apiRouter.post('/updateUserData', async (req, res) => {
-
-  console.log('Request body: ', req.body);
-  let updateData = req.body;
-  delete updateData._id;
-  (await users.updateOne({email: updateData.email}, {$set: updateData}));
-  
-  res.send({success: true});
-});
-
-//Delete a user
-apiRouter.post('/deleteUser', async (req, res) => {
-  (await users.deleteOne({email: req.body.email}))
-  console.log('Deleted user: ', req.body.email);
-  res.send({success: true});
-});
-
-// Return the application's default page if the path is unknown
-app.use((_req, res) => {
-  res.sendFile('index.html', { root: 'public' });
-});
-
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
-});
-
-
-///
-/// Functions for shop cards
-///
-
-
-async function updateShopCards(newCardData = null) {
-
-  console.log('New card data: ', newCardData);
-  
-  if (newCardData) {
-    //new data
-    const result = await shopCards.insertOne(newCardData);
-    console.log(`New shop card created with the following id: ${result.insertedId}`);
-    return {success: true};
-
-  } else {  
-  //no new data, just read and return the current data
-  let shopCardsFromDB = shopCards.find();
-  let shopCardData = await shopCardsFromDB.toArray();
-  return shopCardData;
-  }
-
-}
-
-async function deleteShopCard(cardID) {
-  // Get the card data from the database
-  let cardData = await shopCards.findOne({cardId: cardID.cardID});
-  console.log('Card data to be deleted: ', cardData);
-  if (cardData && cardData.picture) {
-    let picturePath = "public/" + cardData.picture;
-    console.log('Picture path to be deleted: ', picturePath);
-    //delete the picture
-    fs.unlink(picturePath, (err) => {
-      if (err) {
-        console.error('Error deleting picture: ', err);
-      } else {
-        console.log('File Removed: ', picturePath);
-      }
-    });
-
-    const result = await shopCards.deleteOne({cardId: cardID.cardID});
-    console.log(`Deleted shop card with the following id: ${cardID.cardID}`);
-  }
-
-  return {success: true};
-}
-
-
-///
-/// Functions for user data
-///
-
-
-async function authenticateUser(loginInfo) {
-  let valid = false;
-  let returnData;
-  try {
-    let response = users.find();
-    let existingUsers = await response.toArray();
-  
-    for (let i = 0; i < existingUsers.length; i++) {
-      if (existingUsers[i].email === loginInfo.email && existingUsers[i].password === loginInfo.password) {
-        valid = true;
-        returnData = JSON.stringify(existingUsers[i]);
-        break;
-      }
-    }
-  
-    if (!valid) {
-      returnData = {error: "Invalid email or password"};
-    }
-  
-    console.log('Return data: ', returnData);
-
-    return returnData;
-  } catch (error) {
-    console.error('Error during authentication: ', error);
-    return {error: 'Failed to authenticate user'};
-  }
-  
-}
-
-async function addUser(newUserInfo) {
-  let valid = true;
-  let returnData;
-  let response = users.find();
-  let existingUsers = await response.toArray();
-
-  // Check if the email is already in use
-  for (let i = 0; i < existingUsers.length; i++) {
-    if (existingUsers[i].email === newUserInfo.email) {
-      valid = false;
-      break;
-    }
-  }
-  if (valid) {
-    createDocument(users, newUserInfo);
-    returnData = newUserInfo;
-  }
-  if (!valid) {
-    returnData = {error: "This email already exists with a user account. Please log in or use a different email address."};
-  }
-  return returnData;
-}
-
-async function safeUserData() {
-  let userData = users.find();
-  let userDataArray = await userData.toArray();
-
-  for (let i = 1; i < userDataArray.length; i++) {
-    delete userDataArray[i].password;
-  }
-  return userDataArray;
-}

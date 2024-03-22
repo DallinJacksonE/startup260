@@ -5,10 +5,6 @@
 async function buildUserTable() {
 
     try {
-        const response = await fetch('/api/safeUserData');
-        const allUsersData = await response.json();
-        console.log('Admin table data call returned: ', allUsersData);
-
         
         let userTable = document.getElementById('userEndOrders');
         if (userTable === null) {
@@ -16,15 +12,12 @@ async function buildUserTable() {
         } 
         userTable.innerHTML = '';
 
-        let loggedInUser = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user'));
+        let loggedUser = await fetch('/api/secureUser');
+        let loggedInUser = await loggedUser.json();
 
-        allUsersData.forEach(user => {
-            if (user.email === loggedInUser.email) {
-                let userCard = createCard(user, true);
-                userTable.appendChild(userCard);
-            }
+        let userCard = createCard(loggedInUser, true);
 
-        });
+        userTable.appendChild(userCard);
 
     } catch (error) {
         console.log(error)
@@ -37,7 +30,7 @@ async function buildUserTable() {
 async function buildAdminTable() {
     // get data from api call
     try {
-        const response = await fetch('/api/safeUserData');
+        const response = await fetch('/api/adminAccess');
         const allUsersData = await response.json();
         console.log('Admin table data call returned: ', allUsersData);
 
@@ -101,15 +94,14 @@ async function updateOrderData(userData, call, id) {
     let jsonData = JSON.stringify(userData);
 
     try {
-        const response = await fetch('/api/updateUserData', {
+        const response = await fetch('/api/updateUserOrders', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: jsonData,
         });
-        const data = await response.json();
-        console.log("Order data for user update call: ", data.success);
+        console.log("Order data for user update call: ", response.status);
 
         buildAdminTable();
         buildUserTable();
@@ -128,33 +120,55 @@ function buildTable(userData, userEnd = false) {
     table.className = 'table';
     let thead = document.createElement('thead');
     let tr = document.createElement('tr');
+    tr.style.display = 'flex';
+    
 
     let th = document.createElement('th');
+    th.style.flex = '.75';
+    th.style.padding = '1px';
     th.textContent = "Order ID";
     tr.appendChild(th);
 
     th = document.createElement('th');
-    th.textContent = "Item Name";
+    th.style.flex = '1.1';
+    th.style.padding = '1px';
+    th.textContent = "Item";
     tr.appendChild(th);
 
     th = document.createElement('th');
+    th.style.flex = '1';
+    th.style.padding = '1px';
     th.textContent = "Date Ordered";
     tr.appendChild(th);
 
     th = document.createElement('th');
-    th.textContent = "Order Status";
+    th.style.flex = '1.15';
+    th.style.padding = '1px';
+    th.textContent = "Comments";
     tr.appendChild(th);
 
     th = document.createElement('th');
+    th.style.flex = '1';
+    th.style.padding = '1px';
+    th.textContent = "Created";
+    tr.appendChild(th);
+
+    th = document.createElement('th');
+    th.style.flex = '1';
+    th.style.padding = '1px';
     th.textContent = "Shipped";
     tr.appendChild(th);
 
     if (!userEnd) {
         th = document.createElement('th');
+        th.style.padding = '1px';
+        th.style.flex = '1';
         th.textContent = "Finish Order";
         tr.appendChild(th);
 
         th = document.createElement('th');
+        th.style.padding = '1px';
+        th.style.flex = '1';
         th.textContent = "Complete Shipping";
         tr.appendChild(th);
     }
@@ -167,19 +181,37 @@ function buildTable(userData, userEnd = false) {
         if (order.shipped === false) {
             //build the table
             let tr = document.createElement('tr');
+            tr.style.display = 'flex';
+
             let td = document.createElement('td');
+            td.style.flex = '.75';
             td.textContent = order.uniqueId;
             tr.appendChild(td);
 
             td = document.createElement('td');
+            td.style.flex = '1.1';
             td.textContent = order.card.title;
             tr.appendChild(td);
 
             td = document.createElement('td');
+            td.style.flex = '1';
             td.textContent = order.dateSubmitted;
             tr.appendChild(td);
 
             td = document.createElement('td');
+            td.style.flex = '1.5';
+            if (order.comments === "") {
+                order.comments = 'None';
+            }   
+            td.textContent = order.comments;
+            
+            td.style.maxHeight = '100px'; // Set the maximum height
+            td.style.overflowY = 'auto'; // Enable vertical scrolling
+            td.style.maxWidth = '200px'; // Set the maximum width
+            tr.appendChild(td);
+
+            td = document.createElement('td');
+            td.style.flex = '1';
             td.textContent = "In Progress";
             td.style.color = 'orange';
             if (order.complete === true) {
@@ -190,6 +222,7 @@ function buildTable(userData, userEnd = false) {
             tr.appendChild(td);
 
             td = document.createElement('td');
+            td.style.flex = '1';
             td.textContent = "Pending";
             td.style.color = 'orange';
             if (order.shipped === true) {
@@ -200,6 +233,7 @@ function buildTable(userData, userEnd = false) {
 
             if (!userEnd) {
                 td = document.createElement('td');
+                td.style.flex = '1';
                 let completeButton = document.createElement('button');
                 completeButton.className = 'btn btn-outline-primary';
                 completeButton.textContent = 'Complete';
@@ -210,6 +244,7 @@ function buildTable(userData, userEnd = false) {
                 tr.appendChild(td);
 
                 td = document.createElement('td');
+                td.style.flex = '1';
                 let shippedButton = document.createElement('button');
                 shippedButton.className = 'btn btn-outline-success';
                 shippedButton.textContent = 'Shipped';
