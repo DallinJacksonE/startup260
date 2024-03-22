@@ -74,14 +74,14 @@ async function loadNavBar() {
         ticket.appendChild(ticketLink);
         ul.appendChild(ticket);
 
-        let status = document.createElement("li");
-        status.className = "nav-item";
-        let statusLink = document.createElement("a");
-        statusLink.className = "nav-link";
-        statusLink.href = "orderstatus.html";
-        statusLink.textContent = "Status";
-        status.appendChild(statusLink);
-        ul.appendChild(status);
+        // let status = document.createElement("li");
+        // status.className = "nav-item";
+        // let statusLink = document.createElement("a");
+        // statusLink.className = "nav-link";
+        // statusLink.href = "orderstatus.html";
+        // statusLink.textContent = "Status";
+        // status.appendChild(statusLink);
+        // ul.appendChild(status);
 
         let about = document.createElement("li");
         about.className = "nav-item";
@@ -134,7 +134,7 @@ async function loadNavBar() {
         navBar.appendChild(container);
         header[0].appendChild(navBar);
 
-        let navLinks = [homeLink, aboutLink, shopLink, statusLink, ticketLink, logoutLink, adminLink];
+        let navLinks = [homeLink, aboutLink, shopLink, ticketLink, logoutLink, adminLink];
         let currentUrl = window.location.href;
         for (let link of navLinks) {
             // If the href of the nav link matches the current URL

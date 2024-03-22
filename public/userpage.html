@@ -46,25 +46,30 @@
 <script src="showOrders.js"></script>
 <script>
     async function deleteAccount() {
-        let user = localStorage.getItem('user') || sessionStorage.getItem('user')
-        let email = JSON.parse(user).email
-        let response = await fetch('/api/deleteUser', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email: email })
-        })
-        let result = await response.json()
-        if (result.success) {
-            console.log('Account deleted');
-            localStorage.clear();
-            sessionStorage.clear();
-            window.location.href = 'index.html'
-        } else {
-            console.log('Account not deleted');
-        }
+        try {
+            let response = await fetch('/api/secureUser');
+            let user = await response.json(); // Parse the response as JSON
 
+            let email = user.email
+            let response2 = await fetch('/api/deleteUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: email })
+            })
+            
+            if (response2.status === 204) {
+                console.log('Account deleted');
+                localStorage.clear();
+                sessionStorage.clear();
+                window.location.href = 'index.html'
+            } else {
+                console.log('Account not deleted');
+            }
+        } catch (err) {
+            console.error(`Failed to delete account: ${err}`);
+        }
     }
 </script>
 

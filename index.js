@@ -152,9 +152,9 @@ secureApiRouter.get('/adminAccess', async (req, res) => {
 
 // Delete user account
 secureApiRouter.post('/deleteUser', async (req, res) => {
-  const user = await DB.getUserByToken(req.cookies[authCookieName]);
-  if (user) {
-    await DB.deleteUser(user);
+  const userEmail = req.body;
+  if (userEmail) {
+    await DB.deleteUser(userEmail);
     res.status(204).end();
   } else {
     res.status(401).send({ msg: 'Unauthorized' });

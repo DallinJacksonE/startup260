@@ -75,7 +75,7 @@ async function createUser(email, password, firstName, lastName, address, chatDat
 }
 
 function deleteUser(userToBeDeleted) {
-    return userCollection.deleteOne({ _id: userToBeDeleted._id });
+    return userCollection.deleteOne({ email: userToBeDeleted.email });
 }
 
 function updateUser(updatedUserData) {
