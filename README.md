@@ -39,7 +39,7 @@ This website will be primarily a communication tool for my sister. It will inclu
 
 ![Concept Drawing of the login page](https://github.com/DallinJacksonE/startup260/blob/main/docs/picsForConcept/login.jpg)
 
-## Notes
+## Notes/Deliverables
 
 ### ✅ Setting up HTTPS with caddy
 
@@ -86,15 +86,11 @@ CSS implemented the following:
 - [x] Have the frontend call the instagram API to get Kaylie's instagram gallery
 - [x] Have the orders work
 
-## Note for TAs
+### ‼️ Note for TAs
 
 I have a test account for you guys you can use, or you can make an account to test out the admin features of adding from the shop to the orders cart and chatting.
 email: <csTA@fake.edu>
 password: Apollo
-
-You have admin access to the admin page, so your personal chat with the admin won't work. To see the user experience, you can make an account or log in with
-email: <newFakeEmail@test.com>
-password: fake
 
 ### ✅ Login Deliverable
 
@@ -115,6 +111,14 @@ password: fake
 - [x] index.js is modularized into a index.js and database.js
 - [x] all data is stored in mongoDB (excet for shopcard photos)
 - [x] apis rewritten to use more secure practices
+
+## ✅ WebSocket Deliverable
+
+- [x] Websocket file is written and an HTTP request is upgraded to a websocket connection
+- [x] Websocket sends and recives work as expected
+- [x] User gets real time update in chat window
+- [x] Admin get real time update, and refreshes the active tab if message is recieved
+- [x] Scroll to bottom of chat function
 
 ### TO DO
 
