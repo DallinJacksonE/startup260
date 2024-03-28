@@ -9,7 +9,7 @@ There is a lot to set up and learn, but I am hopeful that I can make her somethi
 
 ## Key Features
 
-This website will be primarily a communication tool for my sister. It will include the ability for customers to login, and see a splash screen with current information that Kaylie will be able to uodate. There will be a gallery of available products for purchase. A login will be required to enter the chat, where one can place orders and give specifications about how they want their products. In the chat, users will talk with Kaylie, and once an agreement is made, they will pay Kaylie's venmo account. The website will then make a ticket that Kaylie will be able to see on an orders page only available to users with the admin status. She can mark them complete, then send the user a message that their product is on the way.
+This website will be primarily a communication tool for my sister. It will include the ability for customers to login, and see a splash screen with current information that Kaylie will be able to update. There will be a gallery of available products for purchase. A login will be required to enter the chat, where one can place orders and give specifications about how they want their products. In the chat, users will talk with Kaylie, and once an agreement is made, they will pay Kaylie's venmo account. The website will then make a ticket that Kaylie will be able to see on an orders page only available to users with the admin status. She can mark them complete, then send the user a message that their product is on the way.
 
 ## Technologies
 
