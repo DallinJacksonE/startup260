@@ -5,11 +5,12 @@ const app = express();
 const DB = require('./database.js');
 const multer = require('multer');
 const fs = require('fs');
+const { peerProxy } = require('./peerProxy.js');
 
 const authCookieName = 'token';
 
 // The service port may be set on the command line
-const port = process.argv.length > 2 ? process.argv[2] : 3000;
+const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
 // JSON body parsing using built-in middleware
 app.use(express.json());
@@ -66,8 +67,7 @@ apiRouter.delete('/auth/logout', (_req, res) => {
 apiRouter.get('/user/:email', async (req, res) => {
   const user = await DB.getUser(req.params.email);
   if (user) {
-    const token = req?.cookies.token;
-    res.send({ email: user.email, authenticated: token === user.token });
+    res.send({user});
     return;
   }
   res.status(404).send({ msg: 'Unknown' });
@@ -203,10 +203,6 @@ function setAuthCookie(res, authToken) {
   });
 }
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
-});
-
 
 ///
 /// Upload shop pictures
@@ -235,3 +231,11 @@ secureApiRouter.post('/upload', upload.single('picture'), (req, res, next) => {
   console.error('Error during file upload:', err);
   res.status(500).send({ message: 'Internal Server Error' });
 });
+
+
+// Websocket server
+const httpService = app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
+});
+
+peerProxy(httpService);

@@ -70,7 +70,7 @@ async function loadNavBar() {
         let ticketLink = document.createElement("a");
         ticketLink.className = "nav-link";
         ticketLink.href = "ticketpage.html";
-        ticketLink.textContent = "Orders";
+        ticketLink.textContent = "Cart";
         ticket.appendChild(ticketLink);
         ul.appendChild(ticket);
 
