@@ -47,6 +47,10 @@ async function removeFromCart(itemUniqueCode, clear = false) {
 async function submitCart() {
 
     try {
+        //wait for the payment to go through
+        
+
+
         let response = await fetch('/api/secureUser');
         const user = await response.json();
         
@@ -120,6 +124,7 @@ async function displayCart() {
 
         console.log(user.orders);
         if (user.orders.length > 0) {
+            let cartTotal = 0;
             let trueCount = 0;
             for (let i = 0; i < user.orders.length; i++) {
                 if (user.orders[i].submitted === false) {
@@ -162,6 +167,8 @@ async function displayCart() {
                     price.textContent = "$" + user.orders[i].card.price;
                     cardBody.appendChild(price);
 
+                    cartTotal += parseInt(user.orders[i].card.price, 10);
+
                     let comments = document.createElement('textarea');
                     comments.className = 'form-control';
                     comments.id = user.orders[i].uniqueId;
@@ -194,6 +201,11 @@ async function displayCart() {
             } else {
                 let dividerLine = document.createElement('hr');
                 ticketForm.appendChild(dividerLine);
+
+                let priceTotal = document.createElement('h5');
+                priceTotal.textContent = 'Total: $' + cartTotal;
+                ticketForm.appendChild(priceTotal);
+
 
                 let submitButton = document.createElement('button');
                 submitButton.className = 'btn btn-primary';
