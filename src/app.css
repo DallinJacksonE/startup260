@@ -2,6 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Goblin+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Newsreader:wght@400;700&display=swap');
+/* Import Bootstrap CSS */
+
 /* Reset default styles */
 * {
     margin: 0;
@@ -141,19 +143,6 @@ footer {
     text-align: left;
 }
 
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-    grid-auto-rows: 10em;
-    grid-gap: 7em;
-}
-
-.gallery-item {
-    margin: 10px;
-    padding: 2%;
-    border-top: solid #1B4965 1px;
-    height: fit-content;
-}
 
 
 /* ---CHAT CSS--- */
