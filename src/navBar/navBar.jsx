@@ -28,7 +28,7 @@ export function NavBar() {
     }, []);
 
     return (
-        <nav className="navbar sticky-top navbar-expand-xl navbar-light bg-light">
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
                 <Link className="navbar-brand" to="/" style={{ fontFamily: 'Goblin One', color: '#1b4965', fontSize: '1.2em' }}>
                     Kaylie's Creations

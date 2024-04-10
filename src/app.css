@@ -128,7 +128,7 @@ footer {
     bottom: 0;
     width: 100%;
 
-  }
+}
 
 .indicator {
     float: right;
@@ -253,4 +253,14 @@ footer {
         padding: 2%;
         border-top: solid #1B4965 1px;
     }
+    .nav ul {
+        flex-direction: column;
+    }
+    .nav li {
+        width: 100%;
+    }
+    .nav li a {
+        padding: 10px;
+    }
+     
 }
