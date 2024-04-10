@@ -1,14 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import UserContext from '../UserContext.jsx';
 
 export function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
+    const { setUser } = useContext(UserContext);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [rememberMe, setRememberMe] = useState(false);
+    const navigate = useNavigate();
 
+    const handleLogin = async (event) => {
+        event.preventDefault();
 
-  const handleLogin = async () => {
-    // Your login function logic here
-    login();
+    const userLogin = { email, password };
+
+    const response = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userLogin)
+    });
+
+    if (response.ok) {
+        if (rememberMe) {
+            localStorage.setItem('userEmail', email);
+        } else {
+            sessionStorage.setItem('userEmail', email);
+        }
+        
+        const user = response.json();
+
+        setUser(user);
+        navigate('/'); // Navigate to home page
+
+    } else {
+      setEmail('');
+      setPassword('');
+      alert('Login failed');
+    }
   };
 
   return (
@@ -39,33 +69,3 @@ export function Login() {
   );
 }
 
-async function login() {
-    
-    let signIn = document.getElementById("login-form")
-    let email = signIn["email"].value
-    let password = signIn["password"].value
-    let rememberMe = signIn["remember-me"].checked
-    let userLogin = {email: email, password: password}
-
-    const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userLogin)
-    });
-    
-    if (response.ok ) {
-        if (rememberMe === true) {
-            localStorage.setItem('userEmail', email);
-        } else {
-            sessionStorage.setItem('userEmail', email);
-        }
-        
-    } else {
-    signIn.reset();
-    signIn["email"].className = "form-control is-invalid";
-    signIn["password"].className = "form-control is-invalid";
-    }
-    
-}

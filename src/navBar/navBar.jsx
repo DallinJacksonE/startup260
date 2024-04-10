@@ -7,11 +7,12 @@
  * generates the shop cards without the buy button.
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext} from 'react';
 import { Link } from 'react-router-dom';
+import UserContext from '../UserContext.jsx';
 
 export function NavBar() {
-    const [user, setUser] = useState(null);
+    const { user, setUser } = useContext(UserContext);
     const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
