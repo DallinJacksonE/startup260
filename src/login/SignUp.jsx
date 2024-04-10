@@ -65,12 +65,15 @@ export function SignUp() {
             let response = await newUserCall.json();
             console.log("New User call response: ", response);
 
-            if (response.error) {
+            if (response.msg === "Existing user") {
                 console.log(response.error);
                 document.getElementById("create-account").reset();
                 
-                let email = document.getElementById("floatingCreateInput");
+                let email = document.getElementById("inputEmail");
                 email.className = "form-control is-invalid";
+
+                let emailError = document.getElementById("emailHelp");
+                emailError.innerHTML = "Email already in use.";
 
 
 

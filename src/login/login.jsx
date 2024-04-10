@@ -29,7 +29,8 @@ export function Login() {
             sessionStorage.setItem('userEmail', email);
         }
         
-        const user = response.json();
+        const userResponse = await fetch('/api/secureUser');
+        const user = await userResponse.json();
 
         setUser(user);
         navigate('/'); // Navigate to home page
