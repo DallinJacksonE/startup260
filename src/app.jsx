@@ -37,7 +37,7 @@ export default function App() {
         
                 <footer className='bg-light text-dark text-muted'>
                 <div className='container-fluid'>
-                    <span className='text-reset'>Created by D. Jackson </span>
+                    <span className='text-reset'>Website by D. Jackson </span>
                     <a className='text-reset' href='https://github.com/DallinJacksonE/startup260'>
                     ( Source )
                     </a>
