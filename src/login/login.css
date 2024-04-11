@@ -1,0 +1,24 @@
+.columns-container {
+    display: flex;
+    padding: 20px;
+    width: 100%;
+    height: fit-content;
+    /* border: red dashed 2px; */
+}
+
+.left-column {
+    margin: .5em;
+    width: 50%;
+    float: left;
+    height: fit-content;
+    display: center;
+    /* border: orange solid 1px; */
+}
+
+.right-column {
+    margin: .5em;
+    width: 50%;
+    float: right;
+    /* border: purple solid 1px; */
+}
+

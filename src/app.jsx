@@ -1,7 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './app.css';
+import { useState, useEffect } from 'react';
 import UserContext from './UserContext.jsx';
 import { Home } from './home/home.jsx';
 import { NavBar } from './navBar/navBar.jsx';
@@ -11,6 +9,9 @@ import { Cart } from './cart/cart.jsx';
 import { About } from './about/about.jsx';
 import { Logout } from './logout/logout.jsx';
 import { ShopComponent } from './shop/shop.jsx';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './app.css';
+
 
 export default function App() {
     const [user, setUser] = useState(null);

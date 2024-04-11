@@ -64,30 +64,6 @@ h1, h2, h3 {
     color: white;
 }
 
-.columns-container, .login-container {
-    display: flex;
-    padding: 20px;
-    width: 100%;
-    height: fit-content;
-    /* border: red dashed 2px; */
-}
-
-.left-column {
-    margin: .5em;
-    width: 50%;
-    float: left;
-    height: fit-content;
-    display: center;
-    /* border: orange solid 1px; */
-}
-
-.right-column {
-    margin: .5em;
-    width: 50%;
-    float: right;
-    /* border: purple solid 1px; */
-}
-
 .chat {
     border: solid 1px black;
     height: 300px;
@@ -112,13 +88,6 @@ main {
 
 #frontpagelefttext {
     float: left;
-    
-}
-
-#instagram {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
     
 }
 

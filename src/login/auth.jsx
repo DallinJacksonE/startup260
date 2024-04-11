@@ -1,10 +1,11 @@
 import React from 'react';
 import { Login } from './login.jsx';
 import { SignUp } from './SignUp.jsx';
+import './login.css';
 
 export function Auth() {
   return (
-    <div className="login-container">
+    <div className="columns-container">
       <div className='left-column'>
         <Login />
       </div>
