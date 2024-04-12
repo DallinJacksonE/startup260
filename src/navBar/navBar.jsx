@@ -9,7 +9,7 @@
 
 import React, { useEffect, useState, useContext} from 'react';
 import { Link } from 'react-router-dom';
-import UserContext from '../UserContext.jsx';
+import UserContext from './../UserContext.jsx';
 
 export function NavBar() {
     const { user, setUser } = useContext(UserContext);
@@ -43,16 +43,16 @@ export function NavBar() {
                             <Link className="nav-link" to=''>Home</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="shop">Shop</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="cart">Cart</Link>
-                        </li>
-                        <li className="nav-item">
                             <Link className="nav-link" to="about">About</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="shop">Shop</Link>
                         </li>
                         {user && (
                             <>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="cart">Cart</Link>
+                                </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" to="logout">Logout</Link>
                                 </li>

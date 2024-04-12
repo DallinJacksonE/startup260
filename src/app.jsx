@@ -8,6 +8,7 @@ import { Auth } from './login/auth.jsx';
 import { Cart } from './cart/cart.jsx';
 import { About } from './about/about.jsx';
 import { Logout } from './logout/logout.jsx';
+import { UserPage } from './userPage/userPage.jsx';
 import { ShopComponent } from './shop/shop.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
@@ -32,6 +33,7 @@ export default function App() {
                     <Route path='/login' element={<Auth />} />
                     <Route path='/about' element={<About />} />
                     <Route path='/logout' element={<Logout />} />
+                    <Route path='/user' element={<UserPage />} />
                     <Route path='*' element={<Home />} />
                 </Routes>
         
@@ -41,6 +43,7 @@ export default function App() {
                     <a className='text-reset' href='https://github.com/DallinJacksonE/startup260'>
                     ( Source )
                     </a>
+                    <p className='text-reset'>For best experience, please use a Mozillia or Chromium Browser </p>
                 </div>
                 </footer>
             </div>

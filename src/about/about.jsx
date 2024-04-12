@@ -1,5 +1,6 @@
 import React from 'react';
 import './about.css';
+import { Link } from 'react-router-dom';
 
 export function About() {
   return (
@@ -20,7 +21,7 @@ export function About() {
                     experience. Here in 2024, you can find an assortment of hand-made creations on my website, on
                     Instagram, or at fairs in the Northern Colorado area.
                 </p>
-                <a href="shop.html" className="btn btn-primary">Check out my stock!</a>
+                <Link className="btn btn-primary" to="/shop">Check Out My Stock</Link>
             </div>
         </div>
     </main>
