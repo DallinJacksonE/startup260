@@ -56,16 +56,6 @@ class chatClass {
     }
     
   
-    scrollToBottom() {
-        var objDiv = document.getElementById("messages");
-        if (objDiv === null) {
-            return;
-        } else {
-            objDiv.scrollTop = objDiv.scrollHeight;
-        }
-        
-    }
-  
     sendMessage() {
         console.log('Sending message...');
 
@@ -96,8 +86,6 @@ class chatClass {
         console.log(jsonData);
 
         this.socket.send(jsonData);
-        this.scrollToBottom();
-       
         
     }
   

@@ -86,7 +86,7 @@ export function Cart() {
     );
   }
 
-  function UserCart({ cartState }) {
+  function UserCart({ cartState = [] }) {
 
     return (
       <>

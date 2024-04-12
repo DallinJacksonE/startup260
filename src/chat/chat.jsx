@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext, useState, useRef } from 'react';
 import UserContext from './../UserContext.jsx';
 import './chat.css';
 import { ChatClass } from './chatClass.js';
@@ -8,6 +8,23 @@ import { ChatClass } from './chatClass.js';
 export function Chat() {
   const { user, setUser } = useContext(UserContext);
 
+  let chatData = ChatClass.getChatData();
+  if (!Array.isArray(chatData)) {
+    chatData = [];
+  }
+
+  const chatBoxRef = useRef(null);
+
+  const scrollToBottom = () => {
+    if (chatBoxRef.current) {
+      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+    }
+  }
+
+  useEffect(scrollToBottom, [chatData]);
+
+
+  useEffect(scrollToBottom, [chatData]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -20,16 +37,13 @@ export function Chat() {
     fetchUser();
   }, []);
 
-  let chatData = ChatClass.getChatData();
-  if (!Array.isArray(chatData)) {
-    chatData = [];
-  }
+  
 
   return (
     <>
       <h2>Chat With Kaylie</h2>
       <div id="chatbox" className='chatbox'>
-          <div id="messages" className="messages" style={{maxHeight: '500px', overflow: 'auto'}}>
+          <div id="messages" className="messages" style={{maxHeight: '500px', overflow: 'auto'}} ref={chatBoxRef} >
             {chatData.map((chatData, index) => (
               <div key={index} className={chatData.sender === "Kaylie Jackson" ? "chat-container darker" : "chat-container"}>
                 <img 
@@ -43,6 +57,7 @@ export function Chat() {
                 </span>
               </div>
             ))}
+            
           </div>
           <div className="messageInput">
             <img src="../../../pics/greylogo.png" alt="UserAvatar" className="right" />
