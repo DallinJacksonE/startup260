@@ -24,7 +24,7 @@ function peerProxy(httpServer) {
     // on message
     ws.on('message', async (data) => {
       console.log(`Received message: ${data}`);
-      console.log(connection);
+
       
       let message = JSON.parse(data);
 
