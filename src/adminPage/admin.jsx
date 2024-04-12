@@ -4,6 +4,7 @@ import UserContext from './../UserContext.jsx';
 import { configureWebSocket } from './adminChat.js';
 import { setUpForms } from './adminShopForms.js';
 import './admin.css';
+import { buildAdminTable } from './showOrders.js';
 
 export function AdminPage() {
     const { user, setUser } = useContext(UserContext);
@@ -37,23 +38,23 @@ export function AdminPage() {
 
         configureWebSocket();
         setUpForms();
-        
+        buildAdminTable();
+
         return (
             <main>
                 <h3>Boss Gorl Page</h3>
-                <p>This is the admin page</p>
                 <button className="btn btn-primary" id="seeChatsButton">See Chats</button>
                 <div className="chatbox" id="chatbox">
                     <div className="messages" id="messages"></div>
                 </div>
 
                 <div id="newShopCardForm" ></div>
-                <div id="deleteShopItem" >
-                    <form>
-                        <h4>Delete Shop Item</h4>
-                        <div id="deleteSelector"></div>
-                    </form>
-                </div>
+                <div id="deleteShopItem" ></div>
+                <form>
+                    <h4>Delete Shop Item</h4>
+                    <div id="deleteSelector"></div>
+                </form>
+                <hr />
                 <div id="orders"></div>
                 
             </main>
