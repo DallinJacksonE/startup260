@@ -30,6 +30,7 @@ function peerProxy(httpServer) {
 
       if (message.type === 'UserConnected') {
         connection.userEmail = message.sender;
+        
         console.log(`User connected: ${connection.userEmail}`);
       } else if (message.type === 'ChatMessage') {
         if (connection.userEmail !== "kayliescreations30@gmail.com") {

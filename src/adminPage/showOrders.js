@@ -32,7 +32,7 @@ export async function buildAdminTable() {
     try {
         const response = await fetch('/api/adminAccess');
         const allUsersData = await response.json();
-        console.log('Admin table data call returned: ', allUsersData);
+        //console.log('Admin table data call returned: ', allUsersData);
 
         let adminTable = document.getElementById('orders');
         if (adminTable === null) {
@@ -49,7 +49,7 @@ export async function buildAdminTable() {
         });
 
     } catch (error) {
-        console.log(error)
+        //console.log(error)
     }
 
 

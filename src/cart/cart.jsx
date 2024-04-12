@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Chat } from './../chat/chat.jsx';
+import { ChatComponent } from '../chat/chatComponent.jsx';
 import UserContext from './../UserContext.jsx';
 import './cart.css';
 
@@ -9,27 +9,35 @@ export function Cart() {
   const { user, setUser } = useContext(UserContext);
   const [total, setTotal] = React.useState(0);
 
+
   useEffect(() => {
+    
     const fetchUser = async () => {
       const response = await fetch('/api/validate');
       if (response.status === 204) {
+        console.log("Cart: ", cart)
+        let newTotal = 0;
+        cart.forEach(order => {
+          if (!order.submitted) {
+            let price = parseInt(order.card.price, 10);
+            newTotal += price;
+          }
+        }
+        );
+        setTotal(newTotal);
+      } else {
+        console.log('User not found');
         const userResponse = await fetch('/api/secureUser');
         const userData = await userResponse.json();
         setUser(userData);
         setCart(userData.orders);
       }
-      let newTotal = 0;
-      cart.forEach(order => {
-        if (!order.submitted) {
-          let price = parseInt(order.card.price, 10);
-          newTotal += price;
-        }
-
-      });
-      setTotal(newTotal);
     };
     fetchUser();
-  }, []);
+  }, [user]);
+
+  
+
 
   const fetchCartItems = async () => {
     const response = await fetch('/api/secureUser');
@@ -77,15 +85,6 @@ export function Cart() {
     fetchCartItems();
   };
 
-  function RemoveFromCart({ itemUniqueCode, clear = false }) {
-    // Add your implementation here
-    return (
-      <button className='btn btn-danger' onClick={() => removeFromCart(itemUniqueCode, clear)}>
-        {clear ? "Clear Cart" : "Remove from Cart"}
-      </button>
-    );
-  }
-
   function UserCart({ cartState = [] }) {
 
     return (
@@ -98,8 +97,12 @@ export function Cart() {
         </div>
         <hr />
         <h5>Total: ${total}</h5>
-        <SubmitCart />
-        <RemoveFromCart clear={true} />
+          <button className='btn btn-primary' onClick={submitCart}>
+            Submit Cart
+          </button>
+          <button className='btn btn-danger' onClick={() => removeFromCart(null, true)}>
+                Clear Cart
+              </button>
       </>
     );
   }
@@ -123,7 +126,9 @@ export function Cart() {
                 id={order.uniqueId}
                 placeholder='Comments'
               />
-              < RemoveFromCart itemUniqueCode={order.uniqueId} />
+              <button className='btn btn-danger' onClick={() => removeFromCart(order.uniqueId)}>
+                Remove from Cart
+              </button>
 
             </div>
           </div>
@@ -132,14 +137,6 @@ export function Cart() {
     );
   }
 
-  function SubmitCart() {
-    // Add your implementation here
-    return (
-      <button className='btn btn-primary' onClick={submitCart}>
-        Submit Cart
-      </button>
-    );
-  }
 
   async function submitCart() {
 
@@ -190,14 +187,14 @@ export function Cart() {
     }
   }
 
-
-
+  
 
   return (
     <main>
       <div className="columns-container">
         <div className="left-column">
-          <Chat />
+        <h2>Chat With Kaylie</h2>
+          <ChatComponent user={user} />
         </div>
         <div className='right-column' id='ticketForm'>
           <UserCart cartState={cart} />
@@ -222,3 +219,4 @@ export function Cart() {
     </main>
   );
 }
+
