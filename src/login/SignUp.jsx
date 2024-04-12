@@ -91,7 +91,7 @@ export function SignUp() {
                 emailEntry.className = "form-control is-valid";
                 consentEntry.className = "form-check-input is-valid";
 
-                await sleep(1500);
+                await sleep(2000);
                 navigate('/');
             }
 

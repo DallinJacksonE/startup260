@@ -2,9 +2,9 @@
 // kayliescreations.biz
 
 
-async function configureWebSocket() {
+export async function configureWebSocket() {
     const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-    socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+    let socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
     console.log(socket);
     let kayliesAdminChat;
     
@@ -83,7 +83,7 @@ class adminChat {
 
     buildCustomerWindowChats() {
         this.customers.forEach(customer => {
-            this.customerWindows.set(customer.email, new adminChatWindow(customer, socket));
+            this.customerWindows.set(customer.email, new adminChatWindow(customer, this.socket));
         });
     }
 
@@ -176,12 +176,12 @@ class adminChatWindow {
     
             if (userChatData[i]["sender"] === "Kaylie Jackson") {
                 chat.className = "chat-container darker";
-                img.src = "android-chrome-512x512.png";
+                img.src = "../../../pics/android-chrome-512x512.png";
                 img.alt = "KaylieAvatar";
                 p.textContent = userChatData[i]["message"];
                 span.className = "chat-time-left";
             } else {
-                img.src = "greylogo.png";
+                img.src = "../../../pics/greylogo.png";
                 img.alt = "UserAvatar";
                 img.className = "right";
                 p.textContent = userChatData[i]["message"];
@@ -201,7 +201,7 @@ class adminChatWindow {
         let messageInput = document.createElement("div");
         messageInput.className = "messageInput";
         let img = document.createElement("img");
-        img.src = "android-chrome-512x512.png";
+        img.src = "../../../pics/android-chrome-512x512.png";
         
         img.alt = "Avatar";
         img.className = "right";
@@ -302,7 +302,4 @@ class adminChatWindow {
 
 }
 
-window.onload = function() {
-    configureWebSocket();
 
-}

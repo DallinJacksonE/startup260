@@ -8,13 +8,18 @@
  */
 
 import React, { useEffect, useState, useContext} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import UserContext from './../UserContext.jsx';
 
+
+
 export function NavBar() {
+    // Add the useState hook
+    const navigate = useNavigate();
     const { user, setUser } = useContext(UserContext);
     const [isAdmin, setIsAdmin] = useState(false);
 
+    // Add the useEffect hook
     useEffect(() => {
         const fetchUser = async () => {
             const response = await fetch('/api/validate');
@@ -26,8 +31,26 @@ export function NavBar() {
             }
         };
         fetchUser();
-    }, []);
+    }, [setUser, setIsAdmin]);
 
+    // Add the handleLogout function
+    const handleLogout = async () => {
+        localStorage.clear();
+        sessionStorage.clear();
+        await fetch('/api/auth/logout', {
+            method: 'DELETE',
+        })
+        .then(() => {
+            setUser(null);
+            setIsAdmin(false);
+            navigate('/login');
+            
+        })
+        .catch((error) => {
+            console.error('Error during logout:', error);
+        });
+    };
+    
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
@@ -54,7 +77,7 @@ export function NavBar() {
                                     <Link className="nav-link" to="cart">Cart</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="logout">Logout</Link>
+                                    <a href="#" className="nav-link" onClick={handleLogout}>Logout</a>
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" to="user">🧶 {user.firstName}</Link>

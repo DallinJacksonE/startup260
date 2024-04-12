@@ -1,6 +1,8 @@
 //Dallin Jackson 2/14/24
 //kayliescreations.biz
 
+
+export async function setUpForms() {
 let shopCardsJson;
 fetch('/api/getShopCards')
     .then(response => {
@@ -20,9 +22,9 @@ fetch('/api/getShopCards')
     .catch(error => {
         console.error('Error:', error);
     });
+}
 
-
-async function deleteShopCard() {
+export async function deleteShopCard() {
 
     let selector = document.querySelector('select');
     let selectedOption = selector.options[selector.selectedIndex];
@@ -41,7 +43,7 @@ async function deleteShopCard() {
 }
 
 
-async function rebuildShopDeleteForm() {
+export async function rebuildShopDeleteForm() {
 
     let response = await fetch('/api/getShopCards');
     let data = await response.json();
@@ -78,39 +80,12 @@ async function rebuildShopDeleteForm() {
     button.className = 'btn btn-danger';
     button.textContent = 'Delete Shop Card'
     button.type = 'button'
-    button.style.margin = '.5em';
     button.onclick = () => deleteShopCard();
     container.appendChild(button);
 }
 
-
-{/* <form>
-                <h4>Upload a New Item to Shop</h4>
-                <div class="mb-3">
-                    <label class="form-label">Admin Password</label>
-                    <input type="password" class="form-control" placeholder="Kronos" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Title</label>
-                    <input type="text" class="form-control" placeholder="Unique Name" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Price</label>
-                    <input type="text" class="form-control" placeholder="$$$" required>
-                </div>
-                <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label">Product Description</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">itemID: Needs to be Unique</label>
-                    <input type="text" class="form-control" placeholder="strawberryCow" required>
-                </div>
-            </form> */}
-
-function buildShopCardForm() {
+export function buildShopCardForm() {
     let container = document.getElementById('newShopCardForm');
-    container.style.padding = '1em';
     container.innerHTML = '';
 
     let form = document.createElement('form');

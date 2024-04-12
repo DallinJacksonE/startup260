@@ -2,6 +2,10 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../UserContext.jsx';
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export function Login() {
     const { setUser } = useContext(UserContext);
     const [email, setEmail] = useState('');
@@ -9,8 +13,8 @@ export function Login() {
     const [rememberMe, setRememberMe] = useState(false);
     const navigate = useNavigate();
 
-    const handleLogin = async (event) => {
-        event.preventDefault();
+  const handleLogin = async (event) => {
+    event.preventDefault();
 
     const userLogin = { email, password };
 
@@ -33,6 +37,7 @@ export function Login() {
         const user = await userResponse.json();
 
         setUser(user);
+        sleep(3000);
         navigate('/'); // Navigate to home page
 
     } else {

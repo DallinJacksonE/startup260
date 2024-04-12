@@ -209,7 +209,7 @@ function setAuthCookie(res, authToken) {
 /// 
 const upload = multer({
   storage: multer.diskStorage({
-    destination: 'public/pics/creations/',
+    destination: '../pics/creations/',
     filename: (req, file, cb) => {
       cb(null, file.originalname);
     },

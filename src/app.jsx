@@ -7,7 +7,7 @@ import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { Auth } from './login/auth.jsx';
 import { Cart } from './cart/cart.jsx';
 import { About } from './about/about.jsx';
-import { Logout } from './logout/logout.jsx';
+import { AdminPage } from './adminPage/admin.jsx';
 import { UserPage } from './userPage/userPage.jsx';
 import { ShopComponent } from './shop/shop.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -32,8 +32,8 @@ export default function App() {
                     <Route path='/cart' element={<Cart />} />
                     <Route path='/login' element={<Auth />} />
                     <Route path='/about' element={<About />} />
-                    <Route path='/logout' element={<Logout />} />
                     <Route path='/user' element={<UserPage />} />
+                    <Route path='/admin' element={<AdminPage />} />
                     <Route path='*' element={<Home />} />
                 </Routes>
         
