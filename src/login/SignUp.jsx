@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import UserContext from '../UserContext.jsx';
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -20,6 +20,8 @@ export function SignUp() {
     const [zip, setZip] = useState('');
     const [consent, setConsent] = useState(false);
     const [errors, setErrors] = useState({});
+    const { setUser } = useContext(UserContext); 
+    
   
     const handleSignUp = async (event) => {
         event.preventDefault();
@@ -78,8 +80,8 @@ export function SignUp() {
 
 
             } else {
-                let user = response;
-                sessionStorage.setItem("userEmail", JSON.stringify(user.email));
+                let newUser = response;
+                sessionStorage.setItem("userEmail", JSON.stringify(newUser.email));
                 let firstNameEntry = document.getElementById("inputFirstName");
                 let lastNameEntry = document.getElementById("inputLastName");
                 let emailEntry = document.getElementById("inputEmail");
@@ -90,7 +92,10 @@ export function SignUp() {
                 lastNameEntry.className = "form-control is-valid";
                 emailEntry.className = "form-control is-valid";
                 consentEntry.className = "form-check-input is-valid";
-
+                
+                let userResponse = await fetch('/api/secureUser');
+                let user = await userResponse.json();
+                setUser(user);
                 await sleep(2000);
                 navigate('/');
             }

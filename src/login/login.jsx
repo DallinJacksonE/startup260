@@ -37,7 +37,7 @@ export function Login() {
         const user = await userResponse.json();
 
         setUser(user);
-        sleep(3000);
+        sleep(2000);
         navigate('/'); // Navigate to home page
 
     } else {

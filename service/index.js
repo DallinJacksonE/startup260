@@ -172,7 +172,7 @@ secureApiRouter.post('/deleteShopCard', async (req, res) => {
     let cardData = await DB.getShopCard(card);
     if (cardData) {
       if (cardData.picture) {
-        fs.unlink(`../${cardData.picture}`, (err) => {
+        fs.unlink(`../public/${cardData.picture}`, (err) => {
           if (err) {
             console.error(err);
             return;
@@ -213,7 +213,7 @@ function setAuthCookie(res, authToken) {
 /// 
 const upload = multer({
   storage: multer.diskStorage({
-    destination: '../pics/creations/',
+    destination: './public/pics/creations/',
     filename: (req, file, cb) => {
       cb(null, file.originalname);
     },
