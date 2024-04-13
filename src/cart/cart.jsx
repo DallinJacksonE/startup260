@@ -14,18 +14,7 @@ export function Cart() {
     
     const fetchUser = async () => {
       const response = await fetch('/api/validate');
-      if (response.status === 204) {
-        console.log("Cart: ", cart)
-        let newTotal = 0;
-        cart.forEach(order => {
-          if (!order.submitted) {
-            let price = parseInt(order.card.price, 10);
-            newTotal += price;
-          }
-        }
-        );
-        setTotal(newTotal);
-      } else {
+      if (response.status !== 204) {
         console.log('User not found');
         const userResponse = await fetch('/api/secureUser');
         const userData = await userResponse.json();
@@ -34,15 +23,26 @@ export function Cart() {
       }
     };
     fetchUser();
-  }, [user]);
+    fetchCartItems();
+  }, []);
 
   
 
-
+  
   const fetchCartItems = async () => {
     const response = await fetch('/api/secureUser');
     const user = await response.json();
     setCart(user.orders);
+    console.log("Cart: ", cart)
+    let newTotal = 0;
+    user.orders.forEach(order => {
+      if (!order.submitted) {
+        let price = parseInt(order.card.price, 10);
+        newTotal += price;
+        newTotal += 5; //shipping
+      }
+    });
+    setTotal(newTotal.toFixed(2));
   };
 
   const removeFromCart = async (itemUniqueCode, clear = false) => {
@@ -85,7 +85,7 @@ export function Cart() {
     fetchCartItems();
   };
 
-  function UserCart({ cartState = [] }) {
+  function UserCart({ cartState = [], total }) {
 
     return (
       <>
@@ -96,19 +96,22 @@ export function Cart() {
           )) : <div>Your cart is empty</div>}
         </div>
         <hr />
-        <h5>Total: ${total}</h5>
+        <h5>Total: ${total} </h5>
+        <hr />
+        <p className='text-reset'>Shipping costs are $5 for each item.</p>
+        <p className='text-reset'>Taxes are included with the cost of the item.</p>
+
           <button className='btn btn-primary' onClick={submitCart}>
             Submit Cart
           </button>
           <button className='btn btn-danger' onClick={() => removeFromCart(null, true)}>
                 Clear Cart
-              </button>
+          </button>
       </>
     );
   }
 
   function CartItem({ order }) {
-
 
     return (
       <div className='card mb-3 w-100'>
@@ -197,7 +200,7 @@ export function Cart() {
           <ChatComponent user={user} />
         </div>
         <div className='right-column' id='ticketForm'>
-          <UserCart cartState={cart} />
+          <UserCart cartState={cart} total={total}/>
         </div>
       </div>
       <div className="card">
