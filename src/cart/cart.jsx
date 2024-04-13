@@ -1,4 +1,14 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { 
+  useEffect, 
+  useState, 
+  useContext 
+} from 'react';
+import {
+  ApplePay,
+  GooglePay,
+  CreditCard,
+  PaymentForm,
+} from "react-square-web-payments-sdk";
 import { ChatComponent } from '../chat/chatComponent.jsx';
 import UserContext from './../UserContext.jsx';
 import './cart.css';
@@ -42,7 +52,7 @@ export function Cart() {
         newTotal += 5; //shipping
       }
     });
-    setTotal(newTotal.toFixed(2));
+    setTotal(newTotal);
   };
 
   const removeFromCart = async (itemUniqueCode, clear = false) => {
@@ -94,19 +104,82 @@ export function Cart() {
           {cartState.length > 0 ? cartState.map((order) => (
             order.submitted ? null : <CartItem key={order.uniqueId} order={order} />
           )) : <div>Your cart is empty</div>}
+          
         </div>
         <hr />
-        <h5>Total: ${total} </h5>
+        <button className='btn btn-danger' onClick={() => removeFromCart(null, true)}>
+                Clear Cart
+          </button>
+        <hr />
+        <h5>Total: ${total.toFixed(2)} </h5>
         <hr />
         <p className='text-reset'>Shipping costs are $5 for each item.</p>
         <p className='text-reset'>Taxes are included with the cost of the item.</p>
 
-          <button className='btn btn-primary' onClick={submitCart}>
-            Submit Cart
-          </button>
-          <button className='btn btn-danger' onClick={() => removeFromCart(null, true)}>
-                Clear Cart
-          </button>
+          
+          <div className='payment-container'>
+            <PaymentForm
+              applicationId="sq0idp--jB8MsYrWCCoJYjymo3pgg"
+              cardTokenizeResponseReceived={async (token, verifiedBuyer) => {
+                let price = total*100;
+                console.log("Amount: ", price);
+                const response = await fetch("/api/pay", {
+                  method: "POST",
+                  headers: {
+                    "Content-type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    sourceId: token.token,
+                    amountMoney: {
+                      amount: price,
+                      currency: 'USD'
+                    }
+                  }),
+                });
+                 
+                if (response.status === 200) {
+                  submitCart();
+                  alert('Payment successful! Your order has been submitted.');
+                } else {
+                  alert('Payment failed. Please try again.');
+                }
+
+              }}
+              locationId='L4KADPS2Q8S0F'
+              createPaymentRequest={() => ({
+                countryCode: "US",
+                currencyCode: "USD",
+                total: {
+                  amount: total.toString(),
+                  label: "Total",
+                },
+              })}
+            >
+              <GooglePay className='payment-component'/>
+              
+              <CreditCard className="payment-component"
+                buttonProps={{
+                  css: {
+                    "[data-theme='dark'] &": {
+                      backgroundColor: '#1b4965',
+                      color: 'var(--ifm-color-emphasis-100)',
+                      '&:hover': {
+                        backgroundColor: '#102b3c',
+                      },
+                    },
+                    backgroundColor: '#1b4965',
+                    fontSize: '14px',
+                    color: '#fff',
+                    '&:hover': {
+                      backgroundColor: '#102b3c',
+                    },
+                  },
+                }}
+                
+              /> 
+
+            </PaymentForm>
+          </div>
       </>
     );
   }

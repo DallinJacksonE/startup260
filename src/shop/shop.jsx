@@ -25,8 +25,14 @@ class ShopCardData {
 
 //Components
 function ShopCardComponent({ card, addToCart, shopView = true}) {
+  const [buttonClicked, setButtonClicked] = useState(false);
   const cardStockStyle = card.readyToShip ? { color: 'green' } : { color: 'grey' };
   const cardStockText = card.readyToShip ? 'Ready to Ship' : 'Made to Order';
+
+  const handleButtonClick = (card) => {
+    addToCart(card);
+    setButtonClicked(true);
+  };
 
   return (
     <div className="col">
@@ -38,7 +44,7 @@ function ShopCardComponent({ card, addToCart, shopView = true}) {
               <h5 className="card-title">{`${card.title} - $${card.price}`}</h5>
               <h6 className="card-stock" style={cardStockStyle}>{cardStockText}</h6>
               <p className="card-text">{card.description}</p>
-              <button className="btn btn-primary" id={card.cardId} onClick={() => addToCart(card)}>
+              <button className={`btn ${buttonClicked ? 'btn-success' : 'btn-primary'}`} id={card.cardId} onClick={() => handleButtonClick(card)}>
                 Add to Cart
               </button>
               </div>
@@ -48,7 +54,6 @@ function ShopCardComponent({ card, addToCart, shopView = true}) {
     </div>
   );
 }
-
 
 //main Component
 export  function ShopComponent() {
@@ -108,6 +113,7 @@ export  function ShopComponent() {
           
           console.log("Updated Cart: ", response2.status);
 
+
       } catch (error) {
           console.error('Error:', error);
       }
@@ -116,15 +122,18 @@ export  function ShopComponent() {
   
   if (validUser) {
     return ( //user view of shop
-      <div className="row row-cols-1 row-cols-md-2 g-4" id="cards-container">
+    <>
+      <div className="row row-cols-1 row-cols-md-3 g-4" id="cards-container">
         {shop.createCards().map(card => (
           <ShopCardComponent key={card.cardId} card={card} addToCart={addToCart} />
         ))}
       </div>
+    </>
+      
     );
   } else {
     return ( //guest view of shop
-      <div className="row row-cols-1 row-cols-md-2 g-4" id="cards-container">
+      <div className="row row-cols-1 row-cols-md-3 g-4" id="cards-container">
         {shop.createCards().map(card => (
           <ShopCardComponent key={card.cardId} card={card} addToCart={addToCart} shopView={false} />
         ))}

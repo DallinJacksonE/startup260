@@ -6,7 +6,7 @@ export function DeleteAccount() {
     const navigate = useNavigate();
     const { setUser } = React.useContext(UserContext);
 
-    const handleDeleteAcctoun = async () => {
+    const handleDeleteAccount = async () => {
         try {
             let response = await fetch('/api/secureUser');
             let user = await response.json(); // Parse the response as JSON
@@ -38,7 +38,7 @@ export function DeleteAccount() {
 
     return (
         
-        <button class="btn btn-danger" onClick="deleteAccount()">Delete Account</button>
+        <button className="btn btn-danger" onClick={handleDeleteAccount}>Delete Account</button>
         
     );
 }

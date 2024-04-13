@@ -112,3 +112,16 @@
         padding: .7em;
         font-weight: medium;
     }
+
+
+.payment-container {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  
+  
+}
+
+.payment-component {
+  margin-top: 45px; 
+}

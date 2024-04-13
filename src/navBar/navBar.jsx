@@ -27,11 +27,14 @@ export function NavBar() {
                 const userResponse = await fetch('/api/secureUser');
                 const userData = await userResponse.json();
                 setUser(userData);
-                setIsAdmin(userData.isAdmin);
+                if (userData.isAdmin) {
+                    setIsAdmin(true);
+                }
+                
             }
         };
         fetchUser();
-    }, [setUser, setIsAdmin]);
+    }, [setUser, isAdmin]);
 
     // Add the handleLogout function
     const handleLogout = async () => {

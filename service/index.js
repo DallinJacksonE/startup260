@@ -6,6 +6,7 @@ const DB = require('./database.js');
 const multer = require('multer');
 const fs = require('fs');
 const { peerProxy } = require('./peerProxy.js');
+const payHandler = require('./pay.js');
 
 const authCookieName = 'token';
 
@@ -23,6 +24,9 @@ app.use(express.static('public'));
 
 // Trust headers that are forwarded from the proxy so we can determine IP addresses
 app.set('trust proxy', true);
+
+// Payment handler
+app.use('/api/pay', payHandler);
 
 // Router for service endpoints
 var apiRouter = express.Router();
@@ -168,7 +172,7 @@ secureApiRouter.post('/deleteShopCard', async (req, res) => {
     let cardData = await DB.getShopCard(card);
     if (cardData) {
       if (cardData.picture) {
-        fs.unlink(`public/${cardData.picture}`, (err) => {
+        fs.unlink(`../${cardData.picture}`, (err) => {
           if (err) {
             console.error(err);
             return;
