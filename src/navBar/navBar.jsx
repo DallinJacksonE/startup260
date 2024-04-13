@@ -85,7 +85,7 @@ export function NavBar() {
                                 <li className="nav-item">
                                     <Link className="nav-link" to="user">🧶 {user.firstName}</Link>
                                 </li>
-                                {isAdmin && (
+                                {user.isAdmin && (
                                     <li className="nav-item">
                                         <Link className="nav-link" to="admin" style={{ color: 'darkred' }}>Admin</Link>
                                     </li>

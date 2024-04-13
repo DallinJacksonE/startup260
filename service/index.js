@@ -172,7 +172,7 @@ secureApiRouter.post('/deleteShopCard', async (req, res) => {
     let cardData = await DB.getShopCard(card);
     if (cardData) {
       if (cardData.picture) {
-        fs.unlink(`../pics/${cardData.picture}`, (err) => {
+        fs.unlink(`../${cardData.picture}`, (err) => {
           if (err) {
             console.error(err);
             return;

@@ -120,11 +120,18 @@ password: Apollo
 - [x] Admin get real time update, and refreshes the active tab if message is recieved
 - [x] Scroll to bottom of chat function
 
+## ✅ React and Demo Submission
+
+- [x] Convert project to a react and vite project
+- [x] Use hooks to set states and render components
+- [x] set up react router
+- [x] project is ready for demo day and use by Kaylie as her online website and store
+
 ### TO DO
 
 - [x] Have error messages display when the login is incorrect
-- [ ] Have a feedback response for when something is added to the cart from the shop
+- [x] Have a feedback response for when something is added to the cart from the shop
 - [x] kaylie needs a table of placed orders
 - [x] user page with submitted orders, ability to delete orders, change address, or delete account
-- [ ] Square pay integration
+- [x] Square pay integration
 - [x] shop card picture file submission
