@@ -2,6 +2,7 @@
 #img-about {
     max-width: 200px;
     float: right;
+    margin: 10px;
 }
 
 #card-header-about {
