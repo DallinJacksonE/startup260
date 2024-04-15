@@ -38,18 +38,18 @@ function ShopCardComponent({ card, addToCart, shopView = true}) {
     <div className="col">
       <div className="card">
         <img src={card.picture} alt={card.title} className="card-img-top" />
-          {shopView && (
-            <>
-              <div className="card-body">
-              <h5 className="card-title">{`${card.title} - $${card.price}`}</h5>
-              <h6 className="card-stock" style={cardStockStyle}>{cardStockText}</h6>
-              <p className="card-text">{card.description}</p>
-              <button className={`btn ${buttonClicked ? 'btn-success' : 'btn-primary'}`} id={card.cardId} onClick={() => handleButtonClick(card)}>
-                Add to Cart
-              </button>
-              </div>
-            </>
-          )}
+          <div className="card-body">
+                <h5 className="card-title">{`${card.title} - $${card.price}`}</h5>
+                <h6 className="card-stock" style={cardStockStyle}>{cardStockText}</h6>
+                <p className="card-text">{card.description}</p>
+            {shopView && (
+              <>
+                <button className={`btn ${buttonClicked ? 'btn-success' : 'btn-primary'}`} id={card.cardId} onClick={() => handleButtonClick(card)}>
+                  Add to Cart
+                </button>
+              </>
+            )}
+          </div>
       </div>
     </div>
   );
