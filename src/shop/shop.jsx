@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './shop.css';
 
 //Classes
 class Shop {
@@ -133,11 +134,15 @@ export  function ShopComponent() {
     );
   } else {
     return ( //guest view of shop
+    <>
+      <p id="smallcentertext">Please sign in to add items to cart</p>
       <div className="row row-cols-1 row-cols-md-3 g-4" id="cards-container">
-        {shop.createCards().map(card => (
-          <ShopCardComponent key={card.cardId} card={card} addToCart={addToCart} shopView={false} />
-        ))}
+          {shop.createCards().map(card => (
+            <ShopCardComponent key={card.cardId} card={card} addToCart={addToCart} shopView={false} />
+          ))}
       </div>
+    </>
+      
     );
   }
 

@@ -11,3 +11,9 @@
     border-top: solid #1B4965 1px;
     height: fit-content;
 }
+
+#smallcentertext {
+    text-align: center;
+    color: grey;
+    
+}
