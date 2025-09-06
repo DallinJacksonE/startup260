@@ -4,3 +4,4 @@ adminPasswords.json
 /docs
 pay.js
 public/pics
+service/node_modules
